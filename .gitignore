@@ -1,0 +1,5 @@
+.idea/
+newrelic_agent.log
+npm-debug.log
+node_modules/
+public/

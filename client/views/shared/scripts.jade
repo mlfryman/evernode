@@ -1,0 +1,27 @@
+//------- Vendor Scripts -------//
+//- jQuery should be the first script
+script(src='/vendor/jquery/dist/jquery.js')
+//- this sticky footer script must be included below jquery
+script(src='/views/footer/footer.js')
+script(src='/vendor/angular/angular.js')
+script(src='/vendor/angular-ui-router/release/angular-ui-router.js')
+script(src='/vendor/ng-file-upload/angular-file-upload.min.js')
+script(src='/vendor/ng-file-upload/angular-file-upload-shim.min.js')
+script(src='/vendor/underscore/underscore.js')
+script(src='/vendor/foundation/js/foundation.min.js')
+script(src='/vendor/moment/min/moment.min.js')
+
+//------- App Scripts -------//  
+script(src='/index.js')
+script(src='/models/user.js')
+script(src='/models/note.js')
+script(src='/views/users/users.js')
+script(src='/views/notes/notes.js')
+script(src='/views/notes/notes_index.js')
+script(src='/views/notes/notes_show.js')
+script(src='/views/nav/nav.js')
+script(src='/analytics.js')
+
+//- must be last script
+script.
+   $(document).foundation();

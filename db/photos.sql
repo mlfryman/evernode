@@ -1,0 +1,5 @@
+CREATE TABLE photos(
+  id SERIAL PRIMARY KEY,
+  url VARCHAR(500) NOT NULL,
+  note_id INTEGER NOT NULL REFERENCES notes(id)
+);

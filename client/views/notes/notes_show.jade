@@ -1,0 +1,40 @@
+.section-header.nine.columns.centered
+  h1 {{note.title}}
+  hr
+    
+.row  
+  .one.columns
+  .ten.columns
+    .panel
+      .row
+        .twelve.columns
+          h4 Title:
+          p
+            h5#title {{note.title}}
+          hr
+      .row
+        .twelve.columns
+          h4 Tags:
+          p#tags
+            span.tags.round.secondary.label(ng-repeat='name in note.tagNames')
+              a(href='/#/notes?filter={{name}}') {{name}}
+          hr
+      .row
+        .twelve.columns
+          h4 Body:
+          p
+            #body {{note.body}}
+          hr
+      .row
+        .twelve.columns
+          h4 Attachments:
+          p
+          .pics(ng-repeat='photo in note.photos', style='background-image:url({{photo}})')
+          hr
+      .row
+        .twelve.columns
+          a.btn.btn-tiny.btn-primary.radius.left(ng-click='') 
+            i.fa.fa-chevron-left &nbsp; Back
+          a.btn.btn-tiny.btn-alert.radius.right(ng-click='')
+            i.fa.fa-trash &nbsp; Delete
+  .one.columns

@@ -1,0 +1,56 @@
+.section-header.nine.columns.centered
+  h1 DASHBOARD
+  hr
+
+.row
+  .six.columns
+    .panel
+      .row
+        .twelve.columns
+          h2 New Note
+        hr
+      .row  
+        .twelve.columns
+          form(name='newNoteForm', enctype='multipart/form-data')
+            .row
+              .twelve.columns
+                label(for='title') Title
+                input#name(type='text', name='title', placeholder='New Note',ng-model='note.title', autofocus)
+            .row
+              .twelve.columns
+                label(for='body') Body
+                textarea#body(name='body', placeholder='What do you need me to remember for you?', ng-model='note.body')
+            .row
+              .twelve.columns
+                  label(for='tags') Tags (comma separated)
+                  input#tags(type='text', name='tags', placeholder='tag1,tag2,tag3', ng-model='note.tags')
+            .row
+              .twelve.columns
+                label(for='photos') Photo(s)
+                  //- create @params: (note, files)
+                input(type='file', ng-file-select='', name='files', accept="image/*", ng-model='photos', ng-file-model='photos', ng-multiple='true')
+            .row
+              .twelve.columns
+                a.btn.btn-medium.btn-primary.radius.right(ng-click='create(note)') Save Note
+  .six.columns  
+    .row
+      .twelve.columns
+        h2 My Notes
+    .row
+      .twelve.columns
+        table#notes
+          thead
+            tr
+              th Title
+              th Tags
+              th Last Updated
+              th View Note
+          tbody
+            tr(ng-repeat='note in notes')
+              td {{note.title}}
+              td
+                span.tags.round.secondary.label(ng-repeat='name in note.tagNames')
+                  a(href='/#/notes?filter={{name}}') {{name}}   
+              td {{note.updatedAt | date: medium}}
+              td
+                a.btn.btn-tiny.btn-secondary.radius(ng-click='viewNote(note.noteId)') View

@@ -1,0 +1,21 @@
+doctype html
+//if IE 9
+  html.lt-ie10(lang='en')  
+html.no-js(ng-app='evernode', lang='en')
+   head
+      meta(charset='utf-8')
+      meta(name='viewport', content='width=device-width, initial-scale=1.0')
+      link(rel='shortcut icon' href='/favicon.ico' type='image/x-icon')
+      link(rel='icon' href='/favicon.ico' type='image/x-icon')
+      title Evernode
+      //- this points to the stylesheets partial
+      include views/shared/stylesheets
+      script(src='/vendor/foundation/js/vendor/modernizr.js')
+   body
+     include views/nav/nav
+     include views/shared/body
+     include views/footer/footer
+     
+     
+     //-  this points to the scripts partial
+     include views/shared/scripts
