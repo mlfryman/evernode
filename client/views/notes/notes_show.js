@@ -2,18 +2,18 @@
   'use strict';
 
   angular.module('evernode')
-    .controller('NotesShowCtrl', ['$scope', '$state', 'Note', function($scope, $state, Note){
+  .controller('NotesShowCtrl', ['$scope', '$state', 'Note', function($scope, $state, Note){
+    $scope.moment = moment;
 
-      Note.findOne($state.params.noteId).then(function(response){
-        console.log('CLIENT SHOW CTRL - note.findOne response: ', response);
-        $scope.note = response.data[0];
-        console.log('CLIENT SHOW CTRL - note.findOne $scope.note = ', response.data);
+    Note.show($state.params.noteId).then(function(response){
+      $scope.note = response.data;
+    });
+
+    $scope.nuke = function(note){
+      Note.nuke(note).then(function(response){
+        $state.go('notes.index');
+        // $state.reload();
       });
-
-      $scope.nuke = function(noteId){
-        Note.nuke(noteId).then(function(response){
-        $state.reload();
-        });
-      };
-    }]);
+    };
+  }]);
 })();

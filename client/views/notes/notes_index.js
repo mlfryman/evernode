@@ -2,38 +2,38 @@
   'use strict';
 
   angular.module('evernode')
-    .controller('NotesIndexCtrl', ['$scope', '$state', 'Note', function($scope, $state, Note){
-      $scope.notes = [];
+  .controller('NotesIndexCtrl', ['$scope', '$state', 'Note', function($scope, $state, Note){
+    $scope.files = [];
+    $scope.count = 0;
+    $scope.pages = 0;
+    $scope._ = _;
 
-      getNotes();
+    Note.query($state.params.tag || '%', $state.params.page * 1 || 0).then(function(response){
+      $scope.notes = response.data.notes;
+    });
 
-      $scope.create = function(note){
-        console.log('CLIENT INDEX CTRL - Note.create $scope.photos: ', $scope.photos);
+    Note.count().then(function(response){
+      $scope.total = response.data.count * 1;
+      $scope.pages = Math.ceil($scope.total / 5);
+    });
+    
+    $scope.isCurrent = function(page){
+      return page === $state.params.page * 1;
+    };
 
-        Note.create(note, $scope.photos).then(function(response){
-          console.log('CLIENT INDEX CTRL - Note.create response: ', response);
-          $scope.photos = undefined;
-          // clears newNoteForm
-          $scope.note = {};
-          // retrieves recent notes
-          getNotes();
-        }, function(response){
-          console.log('CLIENT INDEX CTRL - Note.create new note obj: ', response);
-        });
-      };
+    $scope.create = function(note){
+      $scope.count = 0;
+      Note.create(note).then(function(response){
+        $scope.note = {};
+        Note.upload(response.data.noteId, $scope.files);
+      });
+    };
 
-      $scope.viewNote = function(noteId){
-        console.log('CLIENT INDEX CTRL - viewNote noteId: ', noteId);
-        $state.go('notes.show', {noteId:noteId});
-      };
-
-      function getNotes(limit, offset, filter){
-        console.log('CLIENT INDEX CTRL - getNotes [limit, offset, filter]: ', limit, offset, filter);
-        Note.query(limit, offset, filter).then(function(response){
-          console.log('CLIENT INDEX CTRL - getNotes query response: ', response);
-          $scope.notes = response.data;
-          console.log('CLIENT INDEX CTRL - getNotes $scope.notes = ', response.data);
-        });
+    $scope.$on('upload', function(e, count){
+      $scope.count = count;
+      if($scope.count === $scope.files.length){
+        $state.reload();
       }
-    }]);
+    });
+  }]);
 })();

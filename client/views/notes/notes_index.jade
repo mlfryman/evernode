@@ -26,12 +26,22 @@
                   input#tags(type='text', name='tags', placeholder='tag1,tag2,tag3', ng-model='note.tags')
             .row
               .twelve.columns
-                label(for='photos') Photo(s)
+                label(for='photos') Photos(s)
                   //- create @params: (note, files)
-                input(type='file', ng-file-select='', name='files', accept="image/*", ng-model='photos', ng-file-model='photos', ng-multiple='true')
+                input(type='file', ng-file-select='', name='files', ng-model='files', ng-multiple='true')
+                h3 Uploading Photos
+                table
+                  thead
+                    tr
+                      th Files
+                      th Uploaded
+                  tbody
+                    tr
+                      td {{files.length}}
+                      td {{count}}
             .row
               .twelve.columns
-                a.btn.btn-medium.btn-primary.radius.right(ng-click='create(note)') Save Note
+                a.btn.btn-medium.btn-primary.radius.right(ng-click='create(note)') Create Note
   .six.columns  
     .row
       .twelve.columns
@@ -49,8 +59,12 @@
             tr(ng-repeat='note in notes')
               td {{note.title}}
               td
-                span.tags.round.secondary.label(ng-repeat='name in note.tagNames')
-                  a(href='/#/notes?filter={{name}}') {{name}}   
+                span.tags.round.secondary.label(ng-repeat='name in note.tags')
+                  a(ui-sref='notes.index({tag:name})') {{name}}   
               td {{note.updatedAt | date: medium}}
               td
-                a.btn.btn-tiny.btn-secondary.radius(ng-click='viewNote(note.noteId)') View
+                a.btn.btn-tiny.btn-secondary.radius(ui-sref='notes.show({noteId:note.note_id})') View
+        .pagination-centered
+          ul.pagination
+            li(ng-class='{current:isCurrent(page)}', ng-repeat='page in _.range(0,pages)')
+              a(ui-sref='notes.list({page:page})') {{page}}

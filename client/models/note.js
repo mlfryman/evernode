@@ -1,40 +1,48 @@
+/* jshint loopfunc:true, camelcase:false */
+
 (function(){
   'use strict';
 
-  angular.module('evernode')
-    .factory('Note', ['$http', '$upload', function($http, $upload){
-      function create(note, files){
-        var noteData = {
-            url: '/notes',
-            method: 'POST',
-            data: note,
-            file: files,
-            // this links to (ng-file-model='photos') in the newNoteForm
-            fileFormDataName: 'photos'
-        };
-        return $upload.upload(noteData);
-      }
+  angular.module('hapi-auth')
+  .factory('Note', ['$rootScope', '$http', '$upload', function($rootScope, $http, $upload){
 
-      // set default limit, offset, & filter values
-      function query(limit, offset, filter){
-        limit  = limit  || 10;
-        offset = offset || 0;
-        filter = filter || '%';
-        return $http.get('/notes?limit=' + limit + '&offset=' + offset + '&filter=' + filter);
-      }
+    function create(note){
+      return $http.post('/notes', note);
+    }
 
-      function count(){
-        return $http.get('/notes/count');
-      }
+    function query(tag, page){
+      return $http.get('/notes?limit=5&offset=' + 5 * page + '&tag=' + tag);
+    }
 
-      function findOne(noteId){
-        return $http.get('/notes/' + noteId);
-      }
+    function show(noteId){
+      return $http.get('/notes/' + noteId);
+    }
 
-      function nuke(noteId){
-        return $http.delete('/notes/' + noteId);
-      }
+    function count(){
+      return $http.get('/notes/count');
+    }
 
-      return {create:create, query:query, count:count, findOne:findOne, nuke:nuke};
-    }]);
+    function nuke(note){
+      return $http.delete('/notes/' + note.note_id);
+    }
+
+    function upload(noteId, files){
+      var count = 0;
+      for (var i = 0; i < files.length; i++){
+        var file = files[i];
+        $upload.upload({
+          url: '/notes/' + noteId + '/upload',
+          method: 'POST',
+          file: file
+        }).success(function(data, status, headers, config){
+          count++;
+          $rootScope.$broadcast('upload', count);
+        }).error(function(){
+          console.log('An error has occurred during a file upload');
+        });
+      }
+    }
+
+    return {create:create, upload:upload, show:show, query:query, count:count, nuke:nuke};
+  }]);
 })();
