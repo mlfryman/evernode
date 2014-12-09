@@ -12,7 +12,6 @@
             // this links to (ng-file-model='photos') in the newNoteForm
             fileFormDataName: 'photos'
         };
-
         return $upload.upload(noteData);
       }
 
@@ -20,15 +19,22 @@
       function query(limit, offset, filter){
         limit  = limit  || 10;
         offset = offset || 0;
-        filter = filter || '';
-
+        filter = filter || '%';
         return $http.get('/notes?limit=' + limit + '&offset=' + offset + '&filter=' + filter);
+      }
+
+      function count(){
+        return $http.get('/notes/count');
       }
 
       function findOne(noteId){
         return $http.get('/notes/' + noteId);
       }
 
-      return {create:create, query:query, findOne:findOne};
+      function nuke(noteId){
+        return $http.delete('/notes/' + noteId);
+      }
+
+      return {create:create, query:query, count:count, findOne:findOne, nuke:nuke};
     }]);
 })();

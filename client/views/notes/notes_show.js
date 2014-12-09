@@ -9,5 +9,11 @@
         $scope.note = response.data[0];
         console.log('CLIENT SHOW CTRL - note.findOne $scope.note = ', response.data);
       });
+
+      $scope.nuke = function(noteId){
+        Note.nuke(noteId).then(function(response){
+        $state.reload();
+        });
+      };
     }]);
 })();
