@@ -19,6 +19,7 @@
     "aws-sdk": "^2.0.28",
     "bcrypt": "^0.8.0",
     "bower": "^1.3.12",
+    "concat-stream": "^1.4.7",
     "crypto": "0.0.3",
     "good": "^4.0.0",
     "good-console": "^2.0.1",

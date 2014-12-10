@@ -25,10 +25,11 @@
                   label(for='tags') Tags (comma separated)
                   input#tags(type='text', name='tags', placeholder='tag1,tag2,tag3', ng-model='note.tags')
             .row
-              .twelve.columns
+              .six.columns
                 label(for='files') Attachment(s)
-                input(type='file', ng-file-select='', name='files', ng-model='files', ng-multiple='true')
-                h3 Upload Progress
+                input(type='file', ng-file-select='', name='files', ng-model='files', ng-file-model='files', ng-multiple='true')
+              .six.columns
+                label Upload Progress
                 table
                   thead
                     tr
@@ -38,9 +39,9 @@
                     tr
                       td {{files.length}}
                       td {{count}}
-            .row
-              .twelve.columns
-                a.btn.btn-medium.btn-primary.radius.right(ng-click='create(note)') Create Note
+              .row
+                .twelve.columns
+                  a.button.expand.success.radius(ng-click='create(note)') Create Note
   .six.columns  
     .row
       .twelve.columns
@@ -66,4 +67,4 @@
         .pagination-centered
           ul.pagination
             li(ng-class='{current:isCurrent(page)}', ng-repeat='page in _.range(0,pages)')
-              a(ui-sref='notes.list({page:page})') {{page}}
+              a(ui-sref='notes.index({page:page})') {{page}}

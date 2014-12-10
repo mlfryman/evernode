@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION create_note (user_id integer, title varchar, body text, tags varchar)
+CREATE OR REPLACE FUNCTION add_note (user_id integer, title varchar, body text, tags varchar)
 RETURNS integer AS $$
 
 DECLARE
