@@ -22,14 +22,18 @@
     };
 
     $scope.create = function(note){
+      console.log('CLIENT INDEX MODEL - note.create 1: ', note);
       $scope.count = 0;
       Note.create(note).then(function(response){
+      console.log('CLIENT INDEX MODEL - note.create 2: ', note);
         $scope.note = {};
+        debugger;
         Note.upload(response.data.noteId, $scope.files);
       });
     };
 
     $scope.$on('upload', function(e, count){
+      console.log('CLIENT INDEX MODEL - file upload @params(e, count): ', e, count);
       $scope.count = count;
       if($scope.count === $scope.files.length){
         $state.reload();

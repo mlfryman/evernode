@@ -3,8 +3,8 @@
 'use strict';
 
 var AWS     = require('aws-sdk'),
-    concat = require('concat-stream'),
-    crypto = require('crypto'),
+    concat  = require('concat-stream'),
+    crypto  = require('crypto'),
     path    = require('path'),
     pg      = require('../postgres/manager');
 
@@ -25,10 +25,13 @@ function Note(){
  * @auth required
  */
 Note.create = function(user, obj, cb){
- var psqlString = 'SELECT add_note($1, $2, $3, $4)',
+  console.log('SERVER NOTE MODEL - note.create @params(user, obj, cb): ', user, obj, cb);
+  var psqlString = 'SELECT add_note($1, $2, $3, $4)',
      psqlParams = [user.id, obj.title, obj.body, obj.tags];
 
   pg.query(psqlString, psqlParams, function(err, results){
+    console.log('SERVER NOTE MODEL - note.create query return ERROR (err): ', err);
+    console.log('SERVER NOTE MODEL - note.create query return RESULTS (results): ', results);
     cb(err, results && results.rows ? results.rows[0].add_note : null);
   });
 };
@@ -42,13 +45,13 @@ Note.create = function(user, obj, cb){
  * @param {String} dt (dirty tags)
  * @return {String} tags (cleaned tags)
  */
-Note.normalizeTags = function(dt){
-  var tags = dt.split(',');
-  tags.forEach(function(t, i){
-    tags[i] = t.trim().toLowerCase();
-  });
-  return tags.join(',');
-};
+// Note.normalizeTags = function(dt){
+//   var tags = dt.split(',');
+//   tags.forEach(function(t, i){
+//     tags[i] = t.trim().toLowerCase();
+//   });
+//   return tags.join(',');
+// };
 
 /**
  * Query Tags
