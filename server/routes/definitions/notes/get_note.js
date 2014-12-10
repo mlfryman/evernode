@@ -4,23 +4,16 @@ var Joi  = require('joi'),
     Note = require('../../../models/note');
 
 module.exports = {
-  description: 'Find one note for logged in user',
+  description: 'Show Note',
   tags:['notes'],
   validate: {
     params: {
-      noteId: Joi.number()
+      noteId: Joi.number().required()
     }
   },
-  auth: {
-    mode: 'try'
-  },
   handler: function(request, reply){
-    request.params.userId = request.auth.credentials.id;
-    Note.findOne(request.params, function(err, note){
-      console.log('SERVER GET_NOTE CTRL - Note.findOne ERROR: ', err);
-      console.log('SERVER GET_NOTE CTRL - Note.findOne NOTE: ', note);
+    Note.show(request.auth.credentials, request.params.noteId, function(err, note){
       reply(note).code(err ? 400 : 200);
-      console.log('SERVER GET_NOTE CTRL - get_note REPLY(note): ', note);
     });
   }
 };

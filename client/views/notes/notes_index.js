@@ -16,7 +16,7 @@
       $scope.total = response.data.count * 1;
       $scope.pages = Math.ceil($scope.total / 5);
     });
-    
+
     $scope.isCurrent = function(page){
       return page === $state.params.page * 1;
     };

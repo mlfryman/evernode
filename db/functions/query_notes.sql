@@ -1,6 +1,7 @@
 CREATE OR REPLACE FUNCTION query_notes (uid integer, lmt integer, ofst integer, tag varchar)
 RETURNS TABLE (note_id integer, title varchar, body text, updated_at timestamp, tags varchar[]) AS $$
 DECLARE
+
 BEGIN
   RETURN query
     SELECT n.id, n.title, n.body, n.updated_at, array_agg(t.name)

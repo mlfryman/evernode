@@ -26,10 +26,9 @@
                   input#tags(type='text', name='tags', placeholder='tag1,tag2,tag3', ng-model='note.tags')
             .row
               .twelve.columns
-                label(for='photos') Photos(s)
-                  //- create @params: (note, files)
+                label(for='files') Attachment(s)
                 input(type='file', ng-file-select='', name='files', ng-model='files', ng-multiple='true')
-                h3 Uploading Photos
+                h3 Upload Progress
                 table
                   thead
                     tr

@@ -1,6 +1,7 @@
 .section-header.nine.columns.centered
   h1 {{note.title}}
   hr
+  h3.subheader {{moment(note.updated_at).format('MMMM Do YYYY @ h:mm:ss a')}}
     
 .row  
   .one.columns
@@ -16,20 +17,21 @@
         .twelve.columns
           h4 Tags:
           p#tags
-            span.tags.round.secondary.label(ng-repeat='name in note.tagNames')
-              a(href='/#/notes?filter={{name}}') {{name}}
+            span.tags.round.secondary.label(ng-repeat='tag in note.tags')
+              a(ui-sref='notes.list({tag:tag})') {{tag}}
           hr
       .row
         .twelve.columns
           h4 Body:
-          p
+          blockquote
             #body {{note.body}}
           hr
       .row
         .twelve.columns
           h4 Attachments:
-          p
-          .pics(ng-repeat='photo in note.photos', style='background-image:url({{photo}})')
+          ul.small-block-grid-3
+            li(ng-repeat='url in note.urls')
+              img.th(ng-src='{{url}}')
           hr
       .row
         .twelve.columns

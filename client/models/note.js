@@ -3,7 +3,7 @@
 (function(){
   'use strict';
 
-  angular.module('hapi-auth')
+  angular.module('evernode')
   .factory('Note', ['$rootScope', '$http', '$upload', function($rootScope, $http, $upload){
 
     function create(note){

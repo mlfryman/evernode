@@ -2,18 +2,18 @@
 
 'use strict';
 
-var async   = require('async'),
-    AWS     = require('aws-sdk'),
+var AWS     = require('aws-sdk'),
+    concat = require('concat-stream'),
+    crypto = require('crypto'),
     path    = require('path'),
     pg      = require('../postgres/manager');
 
 /**
  * Note constructor
  *
- * @param {Object} obj (note)
  * @auth required
  */
-function Note(obj){
+function Note(){
 }
 
 /**
@@ -24,52 +24,18 @@ function Note(obj){
  * @return {Number} noteId
  * @auth required
  */
-Note.create = function(obj, cb){
-  // console.log('SERVER NOTE MODEL - note.create @param obj: ', obj);
-  // console.log('SERVER NOTE MODEL - note.create @param obj.photos[0]: ', obj.photos[0].hapi.filename);
-
-  // if the notes has tags, normalize them.
-  // if !tags set obj.tags to NULL
-  obj.tags = Note.normalizeTags(obj.tags || '');
-
-  var psqlString = 'SELECT create_note($1, $2, $3, $4)',
-      psqlParams = [obj.userId, obj.title, obj.body, obj.tags];
+Note.create = function(user, obj, cb){
+ var psqlString = 'SELECT add_note($1, $2, $3, $4)',
+     psqlParams = [user.id, obj.title, obj.body, obj.tags];
 
   pg.query(psqlString, psqlParams, function(err, results){
-    if(err || !(results && results.rows)){return cb(err || 'SERVER NOTE MODEL - create Note failed', null);}
-    // console.log('SERVER NOTE MODEL - create.note results: ', results.rows[0].create_note);
-    // the noteId will be index[0] in the rows array
-    var noteId = results.rows[0].create_note;
-
-    // if no photos are attached, continue to save the note
-    if(!obj.photos){return cb(err, noteId);}
-    // if only one file is selected, Hapi returns an {} instead of an [].
-    // so, if obj.photos is ![], turn it into an [].
-    if(!Array.isArray(obj.photos)){obj.photos = [obj.photos];}
-
-    var photos = obj.photos.map(function(obj, i){
-      return {noteId:noteId, photoId:i, stream:obj};
-    });
-    /**
-     * Upload Photos to S3
-     *
-     * @param {Array} photos
-     * @param {Function} uploadPhotoToS3(iterator)
-     * @param {Function} cb (err, photoUrls)
-     * @return {Array} photoUrls
-     * @auth required
-     */
-    // produces a new array of values by mapping each value in arr through the iterator function.
-    async.map(photos, uploadPhotoToS3, function(err, photoUrls){
-      var urlString = photoUrls.join(',');
-      // run psql upload_photos function
-      pg.query('SELECT upload_photos($1,$2)', [urlString, noteId], function(err, results){
-        cb(err, noteId);
-      });
-    });
+    cb(err, results && results.rows ? results.rows[0].add_note : null);
   });
 };
 
+// if the notes has tags, normalize them.
+// if !tags set obj.tags to NULL
+// obj.tags = Note.normalizeTags(obj.tags || '');
 /**
  * Normalize Tags - formats tags for consistency
  *
@@ -87,69 +53,110 @@ Note.normalizeTags = function(dt){
 /**
  * Query Tags
  *
+ * @param {Object} user
  * @param {Object} query
  * @param {Function} callback (err, results)
  * @return {Array} results.rows
  * @auth required
  */
-Note.query = function(query, cb){
-  console.log('SERVER NOTE MODEL - note.query(limit, offset, filter): ', query);
-  query.limit = query.limit || 10;
-  query.offset = query.offset || 0;
-  query.filter = query.filter || '';
-
-  var psqlString = 'SELECT * FROM query_notes($1,$2,$3)',
-      psqlParams = [query.userId, query.limit, query.offset];
+Note.query = function(user, query, cb){
+ var psqlString = 'SELECT * FROM query_notes($1, $2, $3, $4)',
+     psqlParams = [user.id, query.limit || 10, query.offset || 0, query.tag || '%'];
 
   pg.query(psqlString, psqlParams, function(err, results){
-    cb(err, results.rows);
+    cb(err, results && results.rows ? results.rows : null);
   });
 };
 
 /**
  * Get a single note
  *
- * @param {String} psqlString
- * @param {Array} psqlParams
+ * @param {Object} user
+ * @param {Number} noteId
  * @param {Function} callback (err, results)
  * @return {Array} results.rows
  * @auth required
  */
-Note.findOne = function(params, cb){
-  console.log('SERVER NOTE MODEL - note.findOne (params, cb): ', params, cb);
-  var psqlString = 'SELECT * FROM get_note($1,$2)',
-      psqlParams = [params.userId, params.noteId];
+Note.show = function(user, noteId, cb){
+  console.log('SERVER NOTE MODEL - note.show (user, noteId, cb): ', user, noteId, cb);
+  var psqlString = 'SELECT * FROM show_note($1, $2)',
+     psqlParams = [user.id, noteId];
 
   pg.query(psqlString, psqlParams, function(err, results){
-    console.log('SERVER NOTE MODEL - pg.query get_note ERROR: ', err);
-    console.log('SERVER NOTE MODEL - pg.query get_note RESULTS: ', results);
-    cb(err, results.rows);
-    console.log('SERVER NOTE MODEL - pg.query get_note CB(ERROR): ', err);
-    console.log('SERVER NOTE MODEL - pg.query get_note CB(RESULTS.ROWS): ', results.rows);
+    console.log('SERVER NOTE MODEL - pg.query show_note ERROR: ', err);
+    console.log('SERVER NOTE MODEL - pg.query show_note RESULTS: ', results);
+    cb(err, results && results.rows ? results.rows[0] : null);
+    console.log('SERVER NOTE MODEL - pg.query show_note CB(ERROR): ', err);
+    console.log('SERVER NOTE MODEL - pg.query show_note CB(RESULTS.ROWS): ', results.rows);
+  });
+};
+
+/**
+ * Count Total Notes
+ *
+ * @param {Object} user
+ * @param {Number} noteId
+ * @param {Function} callback (err, results)
+ * @return {Array} results.rows
+ * @auth required
+ */
+Note.count = function(user, cb){
+ var psqlString = 'SELECT COUNT(*) FROM notes WHERE user_id = $1',
+     psqlParams = [user.id];
+
+  pg.query(psqlString, psqlParams, function(err, results){
+    cb(err, results && results.rows ? results.rows[0].count : null);
+  });
+};
+
+/**
+ * Delete a Note
+ *
+ * @param {Object} user
+ * @param {Number} noteId
+ * @param {Function} callback (err, results)
+ * @return {Array} results.rows
+ * @auth required
+ */
+Note.nuke = function(user, noteId, cb){
+ var psqlString = 'SELECT nuke_note($1, $2)',
+     psqlParams = [user.id, noteId];
+
+  pg.query(psqlString, psqlParams, function(err, results){
+    cb(err, results && results.rows ? results.rows[0].nuke_note : null);
+  });
+};
+
+/**
+ * Upload files
+ *
+ * @param {Object} user
+ * @param {Object} file
+ * @param {Object} name
+ * @param {Number} noteId
+ * @param {Function} callback (err, results)
+ * @return {Array} results.rows
+ * @auth required
+ */
+Note.upload = function(user, file, name, noteId, cb){
+  var s3   = new AWS.S3();
+
+  crypto.randomBytes(48, function(ex, buf){
+    var hex        = buf.toString('hex'),
+        loc        = user.token + '/' + noteId + '/' + hex + path.extname(name),
+        url        = 'https://s3.amazonaws.com/' + process.env.AWS_BUCKET + '/' + loc,
+        psqlString = 'INSERT INTO photos (url, note_id) VALUES ($1, $2) RETURNING id',
+        psqlParams = [url, noteId];
+
+    pg.query(psqlString, psqlParams, function(err, results){
+      if(err){return cb(err);}
+
+      file.pipe(concat(function(buf){
+        var params = {Bucket: process.env.AWS_BUCKET, Key: loc, Body: buf, ACL: 'public-read'};
+        s3.putObject(params, cb);
+      }));
+    });
   });
 };
 
 module.exports = Note;
-
-
-// *** HELPER FUNCTION *** //
-
-/**
- * Upload Photos to S3
- *
- * @param {Object} obj
- * @param {Function} cb (err, photoUrl)
- * @return {String} photoUrl
- */
-function uploadPhotoToS3(obj, done){
-  var s3     = new AWS.S3(),
-      ext    = path.extname(obj.stream.hapi.filename),
-      file   = obj.noteId + '_' + obj.photoId + ext,
-      url    = 'https://s3.amazonaws.com/' + process.env.AWS_BUCKET + '/' + file,
-      params = {Bucket: process.env.AWS_BUCKET, Key: file, Body: obj.stream._data, ACL: 'public-read'};
-  s3.putObject(params, function(err){
-    done(err, url);
-    console.log('SERVER NOTE MODEL - uploadPhotoToS3 ERROR: ', err);
-    console.log('SERVER NOTE MODEL - uploadPhotoToS3 URL: ', url);
-  });
-}
