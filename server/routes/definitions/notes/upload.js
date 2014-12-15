@@ -14,7 +14,9 @@ module.exports = {
   payload:{
     maxBytes: 4194304, // 2^22 ; 4MB
     output:'stream',
-    parse: true
+    parse: true,
+    // surgically give this route 60s to timeout
+    timeout: 60000
   },
   handler: function(request, reply){
     Note.upload(request.auth.credentials, request.payload.file, request.payload.file.hapi.filename, request.params.noteId, function(err){

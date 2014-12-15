@@ -12,6 +12,8 @@ module.exports = {
       password: Joi.string().min(3).required()
     }
   },
+  // allows us to test mobile app
+  cors:{origin: ['http://localhost:8100'], credentials: true},
   auth: false,
   handler: function(request, reply){
     User.login(request.payload, function(user){
