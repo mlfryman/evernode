@@ -33,7 +33,6 @@ describe('User', function(){
   describe('.register', function(){
     it('should register a new User', function(done){
       User.register({username:'sam', password:'sam', avatar:'http://images.apple.com/global/elements/flags/16x16/usa_2x.png'}, function(err){
-        console.log('User.register ERROR: ', err);
         expect(err).to.be.null;
         done();
       });
@@ -49,7 +48,6 @@ describe('User', function(){
   describe('.login', function(){
     it('should login a User', function(done){
       User.login({username:'bob', password:'123'}, function(user){
-        console.log('User.login USER: ', user);
         expect(user.username).to.equal('bob');
         done();
       });
