@@ -32,7 +32,7 @@ describe('User', function(){
 
   describe('.register', function(){
     it('should register a new User', function(done){
-      User.register({username:'sam', password:'123', avatar:'http://images.apple.com/global/elements/flags/16x16/usa_2x.png'}, function(err){
+      User.register({username:'sam', password:'sam', avatar:'http://images.apple.com/global/elements/flags/16x16/usa_2x.png'}, function(err){
         expect(err).to.be.null;
         done();
       });
