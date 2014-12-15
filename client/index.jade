@@ -1,0 +1,40 @@
+doctype html
+//if IE 9
+  html.lt-ie10(lang='en')  
+html.no-js(ng-app='hapi-auth', lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title NoteTaker
+    link(rel='stylesheet', href='/vendor/foundation/css/normalize.css')
+    link(rel='stylesheet', href='/vendor/foundation/css/foundation.css')
+    link(rel='stylesheet', href='/vendor/fontawesome/css/font-awesome.css')
+    link(rel='stylesheet', href='/index.css')
+    script(src='/vendor/foundation/js/vendor/modernizr.js')
+  body
+    .row
+      .small-12.columns
+        include views/nav/nav
+    .row
+      .small-12.columns
+        div(ui-view)
+
+    script(src='/vendor/jquery/dist/jquery.min.js')
+    script(src='/vendor/foundation/js/foundation.min.js')
+    script(src='/vendor/angular/angular.min.js')
+    script(src='/vendor/angular-ui-router/release/angular-ui-router.min.js')
+    script(src='/vendor/underscore/underscore-min.js')
+    script(src='/vendor/ng-file-upload/angular-file-upload-all.min.js')
+    script(src='/vendor/moment/min/moment.min.js')
+
+    script(src='/index.js')
+    script(src='/models/user.js')
+    script(src='/models/note.js')
+    script(src='/views/users/users.js')
+    script(src='/views/notes/notes_list.js')
+    script(src='/views/notes/notes_detail.js')
+    script(src='/views/nav/nav.js')
+    script(src='/analytics.js')
+        
+    script.
+      $(document).foundation();

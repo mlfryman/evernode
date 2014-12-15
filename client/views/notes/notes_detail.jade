@@ -1,0 +1,13 @@
+h1 {{note.title}}
+h6 //Date//
+h6.subheader {{moment(note.updated_at).format('MMMM Do YYYY @ h:mm:ss a')}}
+h6 //Tags//
+#tags
+  .tag(ng-repeat='tag in note.tags')
+    a(ui-sref='notes.list({tag:tag})') {{tag}}
+h6 //Body//
+blockquote {{note.body}}
+h6 //Photos//
+ul.small-block-grid-3
+  li(ng-repeat='url in note.urls')
+    img.th(ng-src='{{url}}')

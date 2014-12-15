@@ -1,0 +1,44 @@
+{
+  "name": "hapi-technologies",
+  "version": "1.0.0",
+  "description": "Hapi Technologies",
+  "engines": {
+    "node": "0.10.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nss-cohort-2014-06-07/hapi-technologies"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "postinstall": "grunt deploy"
+  },
+  "author": "Chyld Medford <chyld.medford@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.0.28",
+    "bcrypt": "^0.8.0",
+    "bower": "^1.3.12",
+    "concat-stream": "^1.4.7",
+    "crypto": "0.0.3",
+    "good": "^4.0.0",
+    "good-console": "^2.0.1",
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-copy": "^0.7.0",
+    "grunt-contrib-jade": "^0.13.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-less": "^0.12.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-jscs": "^0.8.1",
+    "grunt-shell": "^1.1.1",
+    "hapi": "^7.5.2",
+    "hapi-auth-cookie": "^1.4.0",
+    "joi": "^4.9.0",
+    "jshint-stylish": "^1.0.0",
+    "lout": "^5.1.2",
+    "pg": "^4.0.0",
+    "request": "^2.49.0"
+  }
+}
