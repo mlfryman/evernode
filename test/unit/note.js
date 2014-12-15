@@ -4,6 +4,7 @@
 
 var expect     = require('chai').expect,
     cp         = require('child_process'),
+    fs         = require('fs'),
     h          = require('../helpers/helpers'),
     Note       = require('../../server/models/note'),
     Lab        = require('lab'),
@@ -82,4 +83,24 @@ describe('Note', function(){
       });
     });
   });
+
+  describe('.upload', function(){
+    it('should upload a b64 encoded image from mobile app', function(done){
+      Note.uploadmobile({token:'tok'}, 'b64 image', noteId, function(err, results){
+        expect(err).to.be.null;
+        done();
+      });
+    });
+  });
+
+  describe('.upload', function(){
+    it('should upload an image from web app', function(done){
+      var file = fs.createReadStream(__dirname + '/../fixtures/flag.png');
+      Note.upload({token:'tok'}, file, 'flag.png', noteId, function(err, results){
+        expect(err).to.be.null;
+        done();
+      });
+    });
+  });
+// last bracket
 });
