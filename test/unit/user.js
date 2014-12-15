@@ -10,7 +10,6 @@ var expect     = require('chai').expect,
     lab        = exports.lab = Lab.script(),
     describe   = lab.describe,
     it         = lab.it,
-    // before     = lab.before,
     beforeEach = lab.beforeEach,
     db         = h.getDB();
 
@@ -22,25 +21,24 @@ describe('User', function(){
   });
 
   describe('constructor', function(){
-    it('should create a user object', function(done){
+    it('should create a User object', function(done){
       var user = new User({username:'bob'});
 
       expect(user).to.be.instanceof(User);
       expect(user.username).to.equal('bob');
-      // lab required ALL tests to have "done", whether async or not.
       done();
     });
   });
 
   describe('.register', function(){
-    it('should register a new user', function(done){
-      User.register({username:'sam', password:'sam', avatar:'https://www.apple.com/global/elements/flags/16x16/usa_2x.png'}, function(err){
+    it('should register a new User', function(done){
+      User.register({username:'sam', password:'123', avatar:'http://images.apple.com/global/elements/flags/16x16/usa_2x.png'}, function(err){
         expect(err).to.be.null;
         done();
       });
     });
     it('should NOT register a new User - duplicate', function(done){
-      User.register({username:'bob', password:'bob', avatar:'https://www.apple.com/global/elements/flags/16x16/usa_2x.png'}, function(err){
+      User.register({username:'bob', password:'123', avatar:'http://images.apple.com/global/elements/flags/16x16/usa_2x.png'}, function(err){
         expect(err).to.be.ok;
         done();
       });
@@ -49,24 +47,22 @@ describe('User', function(){
 
   describe('.login', function(){
     it('should login a User', function(done){
-      User.register({username:'bob', password:'123'}, function(user){
-        expect(user.username).to.be.equal('bob');
-        expect(user).to.be.ok;
+      User.login({username:'bob', password:'123'}, function(user){
+        expect(user.username).to.equal('bob');
         done();
       });
     });
     it('should NOT login a User - bad username', function(done){
-      User.register({username:'bob', password:'123'}, function(user){
+      User.login({username:'wrong', password:'123'}, function(user){
         expect(user).to.be.undefined;
         done();
       });
     });
     it('should NOT login a User - bad password', function(done){
-      User.register({username:'bob', password:'wrong'}, function(user){
+      User.login({username:'bob', password:'wrong'}, function(user){
         expect(user).to.be.undefined;
         done();
       });
     });
   });
-// last bracket
 });
