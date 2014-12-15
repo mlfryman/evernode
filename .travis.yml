@@ -10,7 +10,7 @@ notifications:
 script:
   - npm run syntax
   - npm test
-before script:
+before_script:
   - psql -c 'create database evernode2_test;' -U postgres
   - cd test/scripts; ./create-db.sh evernode2_test; cd ../..;
 after_script:
