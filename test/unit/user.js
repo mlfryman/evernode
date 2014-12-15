@@ -39,6 +39,34 @@ describe('User', function(){
         done();
       });
     });
+    it('should NOT register a new User - duplicate', function(done){
+      User.register({username:'bob', password:'bob', avatar:'https://www.apple.com/global/elements/flags/16x16/usa_2x.png'}, function(err){
+        expect(err).to.be.ok;
+        done();
+      });
+    });
+  });
+
+  describe('.login', function(){
+    it('should login a User', function(done){
+      User.register({username:'bob', password:'123'}, function(user){
+        expect(user.username).to.be.equal('bob');
+        expect(user).to.be.ok;
+        done();
+      });
+    });
+    it('should NOT login a User - bad username', function(done){
+      User.register({username:'bob', password:'123'}, function(user){
+        expect(user).to.be.undefined;
+        done();
+      });
+    });
+    it('should NOT login a User - bad password', function(done){
+      User.register({username:'bob', password:'wrong'}, function(user){
+        expect(user).to.be.undefined;
+        done();
+      });
+    });
   });
 // last bracket
 });

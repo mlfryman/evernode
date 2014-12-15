@@ -6,3 +6,4 @@ if [ -z "$1" ] ; then
 fi
 
 psql $1 -f ../../db/test/clean.sql
+psql $1 -f ../../db/test/populate.sql
