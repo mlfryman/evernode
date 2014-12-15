@@ -11,7 +11,7 @@ script:
   - npm run syntax
   - npm test
 before script:
-  - psql -c 'CREATE DATABASE evernode2_test;' -U postgres
+  - psql -c 'create database evernode2_test;' -U postgres
   - cd test/scripts; ./create-db.sh evernode2_test; cd ../..;
 after_script:
   - npm run coveralls
