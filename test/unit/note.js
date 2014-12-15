@@ -24,7 +24,7 @@ describe('Note', function(){
   describe('constructor', function(){
     it('should create a new Note', function(done){
       var note = new Note({});
-// user.id, obj.title, obj.body, obj.tags
+      // user.id, obj.title, obj.body, obj.tags
       expect(note).to.be.instanceof(Note);
       expect(note.title).to.equal('Test Note');
       done();
