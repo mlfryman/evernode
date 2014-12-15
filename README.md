@@ -3,7 +3,7 @@ Evernode
 
 ### Code Badges
 [![Build Status](https://travis-ci.org/mlfryman/evernode2.svg)](https://travis-ci.org/mlfryman/evernode2)
-- coverage status forthcoming
+[![Coverage Status](https://coveralls.io/repos/mlfryman/evernode2/badge.png)](https://coveralls.io/r/mlfryman/evernode2)
 
 ### Screenshots
 

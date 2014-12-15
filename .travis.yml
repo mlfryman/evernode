@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - "0.10"
+services:
+  - postgresql
+addons:
+  postgresql: "9.3"
+notifications:
+  email: false
+script:
+  - npm run syntax
+  - npm test
+before script:
+  - psql -c 'CREATE DATABASE evernode2_test;' -U postgres
+  - cd test/scripts; ./create-db.sh evernode2_test; cd ../..;
+after_script:
+  - npm run coveralls
+env:
+  global:
+    - DATABASE_URL=postgres://postgres@localhost/evernode2_test
+    - AWS_BUCKET=mlf-evernode2-test

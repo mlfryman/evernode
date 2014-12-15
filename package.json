@@ -9,9 +9,15 @@
     "type": "git",
     "url": "https://github.com/mlfryman/evernode2"
   },
+  "bin": {
+    "coveralls": "./node_modules/coveralls/bin/coveralls.js"
+  },
   "scripts": {
     "start": "node server/index.js",
-    "postinstall": "grunt deploy"
+    "postinstall": "grunt deploy",
+    "syntax": "grunt build",
+    "test": "make test",
+    "coveralls": "make test-cov | coveralls"
   },
   "author": "Melanie Fryman <melanie@fryman.io>",
   "license": "MIT",
