@@ -61,8 +61,6 @@ Photos/Files
 - [Grunt](http://gruntjs.com/)
 - [Amazon Simple Storage Service (Amazon S3)](http://aws.amazon.com/s3/)
 - [Heroku](https://www.heroku.com/)
-- [New Relic](http://newrelic.com/)
-- [Google Analytics](http://www.google.com/analytics/)
 
 ### Contributors
 - [Melanie L. Fryman](https://github.com/mlfryman)
