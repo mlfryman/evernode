@@ -81,7 +81,28 @@ describe('Notes', function(){
       };
 
       server.inject(options, function(response){
-        console.log('GET /notes test response: ', response);
+        expect(response.statusCode).to.equal(200);
+        expect(response.result.notes).to.have.length(1);
+        done();
+      });
+    });
+  });
+
+  describe('GET /notes/{noteId}', function(){
+    it('should show one Note', function(done){
+      var options = {
+        method: 'GET',
+        url: '/notes',
+        headers: {
+          cookie: cookie
+        },
+        params: {
+          noteId: 1
+        }
+      };
+
+      server.inject(options, function(response){
+        console.log('GET /note test response: ', response);
         expect(response.statusCode).to.equal(200);
         expect(response.result.notes).to.have.length(1);
         done();
