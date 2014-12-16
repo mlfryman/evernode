@@ -91,4 +91,21 @@ describe('Users', function(){
       });
     });
   });
+
+  describe('GET /status', function(){
+    it('should get a status for a User', function(done){
+      var options = {
+        method: 'GET',
+        url: '/status',
+        headers: {
+          cookie: cookie
+        }
+      };
+
+      server.inject(options, function(response){
+        expect(response.statusCode).to.equal(200);
+        done();
+      });
+    });
+  });
 });
