@@ -4,9 +4,7 @@
 
 var expect     = require('chai').expect,
     cp         = require('child_process'),
-    // fs         = require('fs'),
     h          = require('../helpers/helpers'),
-    Note       = require('../../server/models/note'),
     server     = require('../../server/index'),
     Lab        = require('lab'),
     lab        = exports.lab = Lab.script(),
@@ -16,17 +14,12 @@ var expect     = require('chai').expect,
     db         = h.getDB();
 
 describe('Notes', function(){
-  var cookie,
-      noteId;
+  var cookie, noteId;
 
   beforeEach(function(done){
     cp.execFile(__dirname + '/../scripts/clean-db.sh', [db], {cwd:__dirname + '/../scripts'}, function(err, stdout, stderr){
-      Note.create({id:1}, {title:'a',body:'b',tags:'c,d,e'}, function(err, results){
-        noteId = results;
-      });
-
-      var options = {
-        method: 'POST',
+      var options1 = {
+        method: 'post',
         url: '/login',
         payload: {
           username: 'bob',
@@ -34,49 +27,58 @@ describe('Notes', function(){
         }
       };
 
-      server.inject(options, function(response){
+      server.inject(options1, function(response){
         cookie = response.headers['set-cookie'][0].match(/hapi-cookie=[^;]+/)[0];
-        done();
+        var options2 = {
+          method: 'post',
+          url: '/notes',
+          payload: {
+            title: 'a',
+            body: 'b',
+            tags: 'c,d,e'
+          },
+          headers:{
+            cookie:cookie
+          }
+        };
+
+        server.inject(options2, function(response){
+          noteId = response.result.noteId;
+          done();
+        });
       });
     });
   });
 
-  describe('POST /notes', function(){
-    it('should create a new Note', function(done){
+  describe('post /notes', function(){
+    it('should create a note', function(done){
       var options = {
-        method: 'POST',
+        method: 'post',
         url: '/notes',
-        headers: {
-          cookie: cookie
-        },
         payload: {
-          title: 'Test Note',
-          body: 'This is a test note.',
-          tags: 'test,notes'
+          title: 'a',
+          body: 'b',
+          tags: 'c,d,e'
+        },
+        headers:{
+          cookie:cookie
         }
       };
 
       server.inject(options, function(response){
-        // console.log('POST /notes test response: ', response);
         expect(response.statusCode).to.equal(200);
-        expect(response.result.noteId).to.be.a('number');
         done();
       });
     });
   });
 
-  describe('GET /notes', function(){
-    it('should query a User\'s Notes', function(done){
+  describe('get /notes', function(){
+    it('should get notes', function(done){
       var options = {
-        method: 'GET',
+        method: 'get',
         url: '/notes',
-        headers: {
-          cookie: cookie
-        },
-        query: {
-          limit: 10,
-          offset: 5,
-          tag: 'test'
+        headers:{
+          cookie:cookie
         }
       };
 
@@ -88,23 +90,75 @@ describe('Notes', function(){
     });
   });
 
-  describe('GET /notes/{noteId}', function(){
-    it('should show one Note', function(done){
+
+  describe('get /notes/count', function(){
+    it('should get notes count', function(done){
       var options = {
-        method: 'GET',
-        url: '/notes',
-        headers: {
-          cookie: cookie
-        },
-        params: {
-          noteId: 1
+        method: 'get',
+        url: '/notes/count',
+        headers:{
+          cookie:cookie
         }
       };
 
       server.inject(options, function(response){
-        console.log('GET /note test response: ', response);
         expect(response.statusCode).to.equal(200);
-        expect(response.result.notes).to.have.length(1);
+        expect(response.result.count).to.equal('1');
+        done();
+      });
+    });
+  });
+
+
+  describe('get /notes/3', function(){
+    it('should show a note', function(done){
+      var options = {
+        method: 'get',
+        url: '/notes/' + noteId,
+        headers:{
+          cookie:cookie
+        }
+      };
+
+      server.inject(options, function(response){
+        expect(response.statusCode).to.equal(200);
+        done();
+      });
+    });
+  });
+
+  describe('delete /notes/3', function(){
+    it('should delete a note', function(done){
+      var options = {
+        method: 'delete',
+        url: '/notes/' + noteId,
+        headers:{
+          cookie:cookie
+        }
+      };
+
+      server.inject(options, function(response){
+        expect(response.statusCode).to.equal(200);
+        done();
+      });
+    });
+  });
+
+  describe('post /notes/3/upload-mobile', function(){
+    it('should upload a mobile photo', function(done){
+      var options = {
+        method: 'post',
+        url: '/notes/' + noteId + '/upload-mobile',
+        headers:{
+          cookie:cookie
+        },
+        payload:{
+          b64: 'ab64string'
+        }
+      };
+
+      server.inject(options, function(response){
+        expect(response.statusCode).to.equal(200);
         done();
       });
     });
