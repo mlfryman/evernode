@@ -57,9 +57,33 @@ describe('Notes', function(){
       };
 
       server.inject(options, function(response){
-        console.log('POST /notes test response: ', response);
+        // console.log('POST /notes test response: ', response);
         expect(response.statusCode).to.equal(200);
         expect(response.result.noteId).to.be.a('number');
+        done();
+      });
+    });
+  });
+
+  describe('GET /notes', function(){
+    it('should query a User\'s Notes', function(done){
+      var options = {
+        method: 'GET',
+        url: '/notes',
+        headers: {
+          cookie: cookie
+        },
+        query: {
+          limit: 10,
+          offset: 5,
+          tag: 'test'
+        }
+      };
+
+      server.inject(options, function(response){
+        console.log('GET /notes test response: ', response);
+        expect(response.statusCode).to.equal(200);
+        expect(response.result.notes).to.have.length(1);
         done();
       });
     });
