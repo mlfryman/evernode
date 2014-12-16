@@ -15,9 +15,25 @@ var expect     = require('chai').expect,
     db         = h.getDB();
 
 describe('Users', function(){
+  var cookie;
+
   beforeEach(function(done){
     cp.execFile(__dirname + '/../scripts/clean-db.sh', [db], {cwd:__dirname + '/../scripts'}, function(err, stdout, stderr){
-      done();
+      var options = {
+        method: 'POST',
+        url: '/login',
+        payload: {
+          username: 'bob',
+          password: '123'
+        }
+      };
+
+      server.inject(options, function(response){
+        // must put set-cookie in brackets since property name is invalid JS syntax
+        // @ index[0], since it returns an array of cookies
+        cookie = response.headers['set-cookie'][0].match(/hapi-cookie=[^;]+/)[0];
+        done();
+      });
     });
   });
 
@@ -32,6 +48,7 @@ describe('Users', function(){
           avatar: 'http://images.apple.com/global/elements/flags/16x16/usa_2x.png'
         }
       };
+
       server.inject(options, function(response){
         expect(response.statusCode).to.equal(200);
         done();
@@ -49,6 +66,25 @@ describe('Users', function(){
           password: '123'
         }
       };
+
+      server.inject(options, function(response){
+        expect(response.statusCode).to.equal(200);
+        expect(response.result.username).to.equal('bob');
+        done();
+      });
+    });
+  });
+
+  describe('DELETE /logout', function(){
+    it('should logout a User', function(done){
+      var options = {
+        method: 'DELETE',
+        url: '/logout',
+        headers: {
+          cookie: cookie
+        }
+      };
+
       server.inject(options, function(response){
         expect(response.statusCode).to.equal(200);
         done();
