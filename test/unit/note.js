@@ -102,5 +102,4 @@ describe('Note', function(){
       });
     });
   });
-// last bracket
 });
