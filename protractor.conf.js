@@ -19,6 +19,6 @@ config.jasmineNodeOpts = {
   defaultTimeoutInterval: 30000
 };
 
-config.baseUrl = 'http://localhost:9001';
+config.baseUrl = 'http://localhost:8080';
 
 exports.config = config;
