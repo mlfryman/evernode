@@ -1,1 +1,54 @@
 h1 home
+body(id='')
+  header.header
+    .row
+      .eight.columns.end
+        .header-content
+          h1#title Evernode 2
+          h2.subheading
+            | a simple(r) note-taking web app
+    // /row
+  // /header
+  // ABOUT SECTION
+  .about
+    .row
+      .eight.columns.centered
+        h1
+          small Note. Tag. Win.
+          |  Evernode
+        p.subheading
+          | Take your note-taking to the next level with Evernode!
+          | From personal reminders to lecture notes to meeting minites,
+          | Evernode has you covered. Quickly find your notes with a simple
+          | search by title, text, or tags.
+        a.btn.btn-primary.btn-large.btn-raised(ui-sref='register', ng-hide='username') Sign Up
+  // / END about section
+  // CONTACT SECTION
+  section#team.our-team
+    // SECTION HEADER
+    .section-header.eight.columns.centered
+      // SECTION TITLE
+      h1 Contact Me
+    // TEAM
+    .row
+      // MEMBER 1
+      .large-12.small-12.columns
+        .team-member
+          figure.profile-pic.img-responsive
+            img(src='assets/img/melanie.jpg', alt='Melanie Fryman')
+          .member-details
+            h5.dark-text.yellow-border-bottom Melanie L. Fryman
+            .position
+              a(href='mailto:melanie@fryman.io') melanie@fryman.io
+          .social-icons
+            ul
+              li
+                a(href='www.linkedin.com/in/mlfryman')
+                  i.fa.fa-linkedin-square
+              li
+                a(href='https://twitter.com/mlfryman')
+                  i.fa.fa-twitter-square
+              li
+                a(href='https://github.com/mlfryman')
+                  i.fa.fa-github-square
+  // / END contact section

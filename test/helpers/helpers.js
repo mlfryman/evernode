@@ -9,3 +9,9 @@ exports.getDB = function(){
 exports.random = function(num){
   return Math.floor(Math.random() * num);
 };
+
+// debugging function for stopping protractor browser
+exports.debug = function(color){
+  browser.executeScript('$("body").css("background-color", "' + color +'")');
+  browser.debugger();
+};

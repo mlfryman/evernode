@@ -1,7 +1,7 @@
 h1 notes
 
 .row
-  .small-8.columns
+  .eight.columns
     h3 list
     table#notes
       thead
@@ -22,7 +22,7 @@ h1 notes
       ul.pagination
         li(ng-class='{current:isCurrent(page)}', ng-repeat='page in _.range(0,pages)')
           a(ui-sref='notes.list({page:page})') {{page}}
-  .small-4.columns
+  .four.columns
     h3 create
     input(type='text', ng-model='note.title', placeholder='Title')
     textarea(ng-model='note.body')
