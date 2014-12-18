@@ -1,15 +1,13 @@
-.section-header.nine.columns.centered
-  h1 {{note.title}}
-  hr
-  h3.subheader {{moment(note.updated_at).format('MMMM Do YYYY @ h:mm:ss a')}}
-  
-h6 Tags
+h1 {{note.title}}
+h5 Date
+h6.subheader {{moment(note.updated_at).format('MMMM Do YYYY @ h:mm:ss a')}}
+h5 Tags
 #tags
   .tag(ng-repeat='tag in note.tags')
     a(ui-sref='notes.list({tag:tag})') {{tag}}
-h6 Body
+h5 Body
 blockquote {{note.body}}
-h6 Photos
+h5 Photos
 ul.small-block-grid-3
   li(ng-repeat='url in note.urls')
     img.th(ng-src='{{url}}')

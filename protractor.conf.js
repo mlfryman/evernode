@@ -2,9 +2,10 @@ var config = {};
 
 config.seleniumAddress = 'http://localhost:4444/wd/hub';
 config.multiCapabilities = [
-  // {
-  //   'browserName': 'chrome'
-  // },
+// only define 1 browser when debugging
+  {
+    'browserName': 'chrome'
+  },
   {
     'browserName': 'firefox'
   }

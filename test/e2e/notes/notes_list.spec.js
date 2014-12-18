@@ -18,17 +18,17 @@ describe('login', function(){
   });
 
   it('should create a new note', function(){
-    var image = path.resolve(__dirname, '../../fixtures/flag.png');
-    element(by.model('note.title')).sendKeys('a');
-    // h.debug('red');
-    element(by.model('note.body')).sendKeys('b');
-    element(by.model('note.tags')).sendKeys('c,d,e');
-    element(by.css('input[type="file"]')).sendKeys(image);
-    // h.debug('blue');
-    element(by.css('button[ng-click]')).click();
+    createNote('a', 'b', 'c,d,e');
     expect(element(by.model('note.title')).getAttribute('value')).toEqual('');
     expect(element(by.model('note.body')).getAttribute('value')).toEqual('');
     expect(element(by.model('note.tags')).getAttribute('value')).toEqual('');
+    expect(element.all(by.repeater('note in notes')).count()).toBeGreaterThan(0);
+  });
+
+  it('should go to the note detail page', function(){
+    createNote('x', 'y', 'z1,z2,z3');
+    element(by.repeater('note in notes').row(0)).element(by.css('td:nth-child(2) > a')).click();
+    expect(element(by.css('div[ui-view] > h1')).getText()).toEqual('x');
   });
 });
 
@@ -36,6 +36,17 @@ function login(){
   browser.get('/#/login');
   element(by.model('user.username')).sendKeys('bob');
   element(by.model('user.password')).sendKeys('123');
-  element(by.css('button[ng-click="submit()"]')).click();
+  element(by.css('button[ng-click]')).click();
   browser.get('/#/notes');
+}
+
+function createNote(title, body, tags){
+  var image = path.resolve(__dirname, '../../fixtures/flag.png');
+  element(by.model('note.title')).sendKeys(title);
+    // h.debug('red');
+  element(by.model('note.body')).sendKeys(body);
+  element(by.model('note.tags')).sendKeys(tags);
+  element(by.css('input[type="file"]')).sendKeys(image);
+    // h.debug('blue');
+  element(by.css('button[ng-click]')).click();
 }
