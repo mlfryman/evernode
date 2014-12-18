@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  angular.module('hapi-auth')
+  angular.module('evernode2')
   .controller('NotesDetailCtrl', ['$scope', '$state', 'Note', function($scope, $state, Note){
     $scope.moment = moment;
 

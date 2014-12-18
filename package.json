@@ -17,6 +17,7 @@
     "postinstall": "grunt deploy",
     "syntax": "grunt build",
     "test": "make test",
+    "e2e": "make test-e2e",
     "coveralls": "make test-cov | coveralls"
   },
   "author": "Melanie Fryman <melanie@fryman.io>",
@@ -50,6 +51,7 @@
   "devDependencies": {
     "chai": "^1.10.0",
     "coveralls": "^2.11.2",
-    "lab": "^5.1.0"
+    "lab": "^5.1.0",
+    "protractor": "^1.5.0"
   }
 }

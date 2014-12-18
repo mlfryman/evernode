@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  angular.module('hapi-auth')
+  angular.module('evernode2')
     .factory('User', ['$http', function($http){
 
       function register(user){

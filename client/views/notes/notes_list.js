@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  angular.module('hapi-auth')
+  angular.module('evernode2')
   .controller('NotesListCtrl', ['$scope', '$state', 'Note', function($scope, $state, Note){
     $scope.files = [];
     $scope.count = 0;

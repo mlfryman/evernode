@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  angular.module('hapi-auth', ['ui.router', 'angularFileUpload'])
+  angular.module('evernode2', ['ui.router', 'angularFileUpload'])
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
       $urlRouterProvider.otherwise('/');
 
