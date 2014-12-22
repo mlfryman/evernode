@@ -2,10 +2,17 @@ Evernode
 ==========
 
 ### Code Badges
+##### Travis
 [![Build Status](https://travis-ci.org/mlfryman/evernode2.svg)](https://travis-ci.org/mlfryman/evernode2)
+
+##### Coveralls
 [![Coverage Status](https://coveralls.io/repos/mlfryman/evernode2/badge.png)](https://coveralls.io/r/mlfryman/evernode2)
 
+##### Sauce Labs
+
+
 ### Screenshots
+![Image1](https://raw.githubusercontent.com/mlfryman/evernode/master/docs/screenshots/evernode_home.png)
 
 ### Description
 Take your note-taking to the next level with Evernode! From personal reminders to lecture notes to meeting minites, Evernode has you covered. Quickly find your notes with a simple search by title, text, or tags.
