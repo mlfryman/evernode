@@ -125,6 +125,21 @@ describe('Notes', function(){
         done();
       });
     });
+    it('should NOT show a note - invalid noteId', function(done){
+      var options = {
+        method: 'GET',
+        url: '/notes/',
+        headers:{
+          cookie:cookie
+        }
+      };
+
+      server.inject(options, function(response){
+        //- expect status = note NOT FOUND
+        expect(response.statusCode).to.equal(404);
+        done();
+      });
+    });
   });
 
   describe('delete /notes/3', function(){
@@ -139,6 +154,21 @@ describe('Notes', function(){
 
       server.inject(options, function(response){
         expect(response.statusCode).to.equal(200);
+        done();
+      });
+    });
+    it('should NOT delete a note - missing noteId', function(done){
+      var options = {
+        method: 'DELETE',
+        url: '/notes/',
+        headers:{
+          cookie:cookie
+        }
+      };
+
+      server.inject(options, function(response){
+        //- expect status = note NOT FOUND
+        expect(response.statusCode).to.equal(404);
         done();
       });
     });
