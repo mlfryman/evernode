@@ -20,7 +20,7 @@
     "e2e": "make test-e2e",
     "coveralls": "make test-cov | coveralls"
   },
-  "author": "Melanie Fryman <melanie@fryman.io>",
+  "author": "Melanie L. Fryman <melanie@fryman.io>",
   "license": "MIT",
   "dependencies": {
     "aws-sdk": "^2.1.4",
