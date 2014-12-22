@@ -2,6 +2,7 @@
 
 describe('login', function(){
   beforeEach(function(){
+    // browser.manage().deleteAllCookies();
     browser.get('/#/login');
   });
 

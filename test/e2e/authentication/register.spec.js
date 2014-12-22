@@ -4,6 +4,7 @@ var h = require('../../helpers/helpers');
 
 describe('register', function(){
   beforeEach(function(){
+    // browser.manage().deleteAllCookies();
     browser.get('/#/register');
   });
 
