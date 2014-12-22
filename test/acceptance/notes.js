@@ -162,5 +162,22 @@ describe('Notes', function(){
         done();
       });
     });
+    it('should NOT upload a mobile photo - invalid noteId', function(done){
+      var options = {
+        method: 'POST',
+        url: '/notes/100/upload-mobile',
+        headers:{
+          cookie:cookie
+        },
+        payload:{
+          b64: 'ab64string'
+        }
+      };
+
+      server.inject(options, function(response){
+        expect(response.statusCode).to.equal(400);
+        done();
+      });
+    });
   });
 });
