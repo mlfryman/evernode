@@ -15,7 +15,7 @@ module.exports = {
   cors:{origin: ['http://localhost:8100'], credentials: true},
   handler: function(request, reply){
     Note.show(request.auth.credentials, request.params.noteId, function(err, note){
-      reply(note).code(err ? 400 : 200);
+      reply(note).code(err ? 404 : 200);
     });
   }
 };

@@ -119,7 +119,6 @@ describe('Notes', function(){
     });
   });
 
-
   describe('get /notes/count', function(){
     it('should get notes count', function(done){
       var options = {
