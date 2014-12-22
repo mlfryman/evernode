@@ -53,6 +53,22 @@ describe('Users', function(){
         done();
       });
     });
+    it('should NOT register a new User - duplicate', function(done){
+      var options = {
+        method: 'POST',
+        url: '/register',
+        payload: {
+          username: 'bob',
+          password: '123',
+          avatar: 'http://images.apple.com/global/elements/flags/16x16/usa_2x.png'
+        }
+      };
+
+      server.inject(options, function(response){
+        expect(response.statusCode).to.equal(400);
+        done();
+      });
+    });
   });
 
   describe('POST /login', function(){
@@ -69,6 +85,21 @@ describe('Users', function(){
       server.inject(options, function(response){
         expect(response.statusCode).to.equal(200);
         expect(response.result.username).to.equal('bob');
+        done();
+      });
+    });
+    it('should NOT login a User - user does not exist', function(done){
+      var options = {
+        method: 'POST',
+        url: '/login',
+        payload: {
+          username: 'sally',
+          password: '876'
+        }
+      };
+
+      server.inject(options, function(response){
+        expect(response.statusCode).to.equal(401);
         done();
       });
     });

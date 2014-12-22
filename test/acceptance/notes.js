@@ -70,6 +70,24 @@ describe('Notes', function(){
         done();
       });
     });
+    it('should NOT create a note - missing title', function(done){
+      var options = {
+        method: 'POST',
+        url: '/notes',
+        payload: {
+          body: 'b',
+          tags: 'c,d,e'
+        },
+        headers:{
+          cookie:cookie
+        }
+      };
+
+      server.inject(options, function(response){
+        expect(response.statusCode).to.equal(400);
+        done();
+      });
+    });
   });
 
   describe('get /notes', function(){
@@ -85,6 +103,17 @@ describe('Notes', function(){
       server.inject(options, function(response){
         expect(response.statusCode).to.equal(200);
         expect(response.result.notes).to.have.length(1);
+        done();
+      });
+    });
+    it('should NOT get notes - user logged out', function(done){
+      var options = {
+        method: 'GET',
+        url: '/notes'
+      };
+
+      server.inject(options, function(response){
+        expect(response.statusCode).to.equal(401);
         done();
       });
     });
@@ -104,6 +133,17 @@ describe('Notes', function(){
       server.inject(options, function(response){
         expect(response.statusCode).to.equal(200);
         expect(response.result.count).to.equal('1');
+        done();
+      });
+    });
+    it('should NOT get notes count - user logged out', function(done){
+      var options = {
+        method: 'GET',
+        url: '/notes/count'
+      };
+
+      server.inject(options, function(response){
+        expect(response.statusCode).to.equal(401);
         done();
       });
     });
