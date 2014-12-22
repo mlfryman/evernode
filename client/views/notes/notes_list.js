@@ -7,6 +7,7 @@
     $scope.count = 0;
     $scope.pages = 0;
     $scope._ = _;
+    $scope.moment = moment;
 
     Note.query($state.params.tag || '%', $state.params.page * 1 || 0).then(function(response){
       $scope.notes = response.data.notes;

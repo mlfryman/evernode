@@ -1,13 +1,21 @@
-h1 {{note.title}}
-h5 Date
-h6.subheader {{moment(note.updated_at).format('MMMM Do YYYY @ h:mm:ss a')}}
-h5 Tags
-#tags
-  .tag(ng-repeat='tag in note.tags')
-    a(ui-sref='notes.list({tag:tag})') {{tag}}
-h5 Body
-blockquote {{note.body}}
-h5 Photos
-ul.small-block-grid-3
-  li(ng-repeat='url in note.urls')
-    img.th(ng-src='{{url}}')
+
+.section-header.nine.columns.centered
+  h1 {{note.title}}
+  hr
+  h3.subheader {{moment(note.updated_at).format('LLLL')}}
+  h3#tags
+    span.tags.round.secondary.label(ng-repeat='tag in note.tags')
+      a(ui-sref='notes.list({tag:tag})') {{tag}}
+  blockquote
+    #body {{note.body}}
+  h4 Attachments:
+  ul.small-block-grid-3
+    li(ng-repeat='url in note.urls')
+      img.th(ng-src='{{url}}')
+  //- hr
+  //- .row
+  //-   a.btn.btn-tiny.btn-primary.radius.left(ng-click='') 
+  //-     i.fa.fa-chevron-left &nbsp; Back
+  //-   a.btn.btn-tiny.btn-alert.radius.right(ng-click='nuke(note)')
+  //-     i.fa.fa-trash &nbsp; Delete
+  //- .row

@@ -1,42 +1,72 @@
-h1 notes
+.section-header.nine.columns.centered
+  h1 DASHBOARD
+  hr
 
 .row
-  .eight.columns
-    h3 list
-    table#notes
-      thead
-        tr
-          th Delete
-          th Title
-          th Tags
-      tbody
-        tr(ng-repeat='note in notes')
-          td
-            a(ng-click='nuke(note)')
-              img(ng-src='/assets/delete.png')
-          td: a(ui-sref='notes.detail({noteId:note.note_id})') {{note.title}}
-          td
-            span.tag(ng-repeat='name in note.tags')
-              a(ui-sref='notes.list({tag:name})') {{name}}          
-    .pagination-centered
-      ul.pagination
-        li(ng-class='{current:isCurrent(page)}', ng-repeat='page in _.range(0,pages)')
-          a(ui-sref='notes.list({page:page})') {{page}}
-  .four.columns
-    h3 create
-    input(type='text', ng-model='note.title', placeholder='Title')
-    textarea(ng-model='note.body')
-    input(type='text', ng-model='note.tags', placeholder='tag1,tag2,tag3')
-    button.small.radius(ng-file-select, ng-model="files", multiple="true") Add Files
-    button.small.radius.success(ng-click='create(note)') Create
-
-    h3 uploading
-    table
-      thead
-        tr
-          th Files
-          th Uploaded
-      tbody
-        tr
-          td {{files.length}}
-          td {{count}}
+  .six.columns
+    .panel
+      .row
+        .twelve.columns
+          h2 New Note
+        hr        
+      .row  
+        .twelve.columns
+          form(name='newNoteForm', enctype='multipart/form-data')
+            .row
+              .twelve.columns
+                label(for='title') Title
+                input#name(type='text', name='title', placeholder='New Note', ng-model='note.title', autofocus)
+            .row
+              .twelve.columns
+                label(for='body') Body
+                textarea#body(name='body', placeholder='What do you need me to remember for you?', ng-model='note.body')
+            .row
+              .twelve.columns
+                  label(for='tags') Tags (comma separated)
+                  input#tags(type='text', name='tags', placeholder='tag1,tag2,tag3', ng-model='note.tags')
+            .row
+              .six.columns
+                label(for='files') Attachment(s)
+                input(type='file', ng-file-select='', name='files', ng-model='files', ng-file-model='files', ng-multiple='true')
+                //- button.small.radius(ng-file-select, ng-model="files", multiple="true") Add Files
+              .six.columns
+                label Upload Progress
+                table
+                  thead
+                    tr
+                      th Files
+                      th Uploaded
+                  tbody
+                    tr
+                      td {{files.length}}
+                      td {{count}}
+              .row
+                .twelve.columns
+                  a.button.expand.success.radius(ng-click='create(note)') Create Note
+  .six.columns  
+    .row
+      .twelve.columns
+        h2 My Notes
+    .row
+      .twelve.columns
+        table#notes
+          thead
+            tr
+              th Title
+              th Tags
+              th Updated
+              th Delete
+          tbody
+            tr(ng-repeat='note in notes')
+              td: a(ui-sref='notes.detail({noteId:note.note_id})') {{note.title}}
+              td
+                span.tags.round.secondary.label(ng-repeat='name in note.tags')
+                  a(ui-sref='notes.list({tag:name})') {{name}}
+              td {{moment(note.updated_at).calendar()}}
+              td
+                a.btn.btn-xtiny.btn-alert.radius.center(ng-click='nuke(note)')
+                  i.fa.fa-lg.fa-trash-o
+        .pagination-centered
+          ul.pagination
+            li(ng-class='{current:isCurrent(page)}', ng-repeat='page in _.range(0,pages)')
+              a(ui-sref='notes.index({page:page})') {{page}}
