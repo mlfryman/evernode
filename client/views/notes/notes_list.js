@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  angular.module('evernode2')
+  angular.module('evernode')
   .controller('NotesListCtrl', ['$scope', '$state', 'Note', function($scope, $state, Note){
     $scope.files = [];
     $scope.count = 0;

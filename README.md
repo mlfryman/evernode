@@ -3,13 +3,13 @@ Evernode
 
 ### Code Badges
 ##### Travis CI
-[![Build Status](https://travis-ci.org/mlfryman/evernode2.svg)](https://travis-ci.org/mlfryman/evernode2)
+[![Build Status](https://travis-ci.org/mlfryman/evernode.svg)](https://travis-ci.org/mlfryman/evernode)
 
 ##### Coveralls
-[![Coverage Status](https://coveralls.io/repos/mlfryman/evernode2/badge.png)](https://coveralls.io/r/mlfryman/evernode2)
+[![Coverage Status](https://coveralls.io/repos/mlfryman/evernode/badge.png)](https://coveralls.io/r/mlfryman/evernode)
 
 ##### Sauce Labs
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/mlf-evernode2.svg)](https://saucelabs.com/u/mlf-evernode2)
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/mlf-evernode.svg)](https://saucelabs.com/u/mlf-evernode)
 
 
 ### Screenshots
@@ -21,38 +21,23 @@ Take your note-taking to the next level with Evernode! From personal reminders t
 ### Models
 ```
 User
-
-```
-
-```
 Note
-
 ```
 
 ### PostgreSQL Database Tables
 ```
 Users
-
-```
-
-```
 Notes
-
-```
-
-```
 Tags
-
-```
-
-```
 Notes_Tags
-
+Photos
 ```
-
+### PostgreSQL Database Functions
 ```
-Photos/Files
-
+add_note
+nuke_note
+show_note
+query_notes
 ```
 
 ### Features

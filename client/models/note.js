@@ -3,7 +3,7 @@
 (function(){
   'use strict';
 
-  angular.module('evernode2')
+  angular.module('evernode')
   .factory('Note', ['$rootScope', '$http', '$upload', function($rootScope, $http, $upload){
 
     function create(note){

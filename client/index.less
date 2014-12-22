@@ -1,55 +1,8 @@
-#avatarlink{
-  height: 45px;
-}
-
-#avatarimg{
-  width: 45px;
-  height: 45px;
-}
-
-textarea{
-  height: 200px;
-}
-
-#notes{
-  width: 100%;
-
-  thead tr{
-    th:nth-child(1){
-      width: 40%;
-    }
-    th:nth-child(2){
-      width: 30%;
-    }
-    th:nth-child(3){
-      width: 20%;
-    }
-    th:nth-child(4){
-      width: 10%;
-    }
-  }
-
-  img{
-    width: 20px;
-    height: 20px;
-  }
-
-  .tag{
-    margin-right: 5px;
-  }
-}
-
-#tags .tag{
-  display: inline-block;
-  margin-right: 5px;
-}
-
 @import url(http://fonts.googleapis.com/css?family=Lato);
 
 /* MIXINS */
 
 @MAIN:    #384047;
-// @GREEN:   #62B346;
 @GREEN:   #20c05c;
 @RED:     #CC342B;
 @WHITE:   #FFFFFE;
@@ -84,11 +37,8 @@ textarea{
   font-weight: bold;
 }
 
-#tags{
-  margin-right: 5px;
-}
-
 textarea{
+  font-family: 'Lato',Helvetica,Arial,sans-serif!important;
   height: 200px;
 }
 
@@ -98,6 +48,43 @@ textarea{
   height: 200px;
   width: 200px;
   background-size: cover;
+}
+
+#notes{
+  font-family: 'Lato',Helvetica,Arial,sans-serif!important;
+  width: 100%;
+
+  thead tr{
+    th:nth-child(1){
+      width: 40%;
+    }
+    th:nth-child(2){
+      width: 30%;
+    }
+    th:nth-child(3){
+      width: 20%;
+    }
+    th:nth-child(4){
+      width: 10%;
+    }
+  }
+
+  img{
+    width: 20px;
+    height: 20px;
+  }
+
+  .tag{
+    margin-right: 5px;
+  }
+}
+
+#tags .tag{
+  font-family: 'Lato',Helvetica,Arial,sans-serif!important;
+  font-size: 12px;
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 5px;
 }
 //--------END Notes Styles--------//
 

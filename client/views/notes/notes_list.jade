@@ -58,8 +58,8 @@
           tbody
             tr(ng-repeat='note in notes')
               td: a(ui-sref='notes.detail({noteId:note.note_id})') {{note.title}}
-              td
-                span.tags.round.secondary.label(ng-repeat='name in note.tags')
+              td#tags
+                span.tag.round.secondary.label(ng-repeat='name in note.tags')
                   a(ui-sref='notes.list({tag:name})') {{name}}
               td {{moment(note.updated_at).calendar()}}
               td

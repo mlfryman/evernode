@@ -3,7 +3,7 @@
   hr
   h3.subheader {{moment(note.updated_at).format('LLLL')}}
   h3#tags
-    span.tags.round.secondary.label(ng-repeat='tag in note.tags')
+    span.tag.round.secondary.label(ng-repeat='tag in note.tags')
       a(ui-sref='notes.list({tag:tag})') {{tag}}
   blockquote
     #body {{note.body}}

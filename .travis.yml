@@ -12,8 +12,8 @@ script:
   - npm run syntax
   - npm test
 before_script:
-  - psql -c 'create database evernode2_test;' -U postgres
-  - cd test/scripts; ./create-db.sh evernode2_test; cd ../..;
+  - psql -c 'create database evernode_test;' -U postgres
+  - cd test/scripts; ./create-db.sh evernode_test; cd ../..;
   - PORT=9001 node server/index.js&
   - sleep 5
 after_script:
@@ -21,13 +21,13 @@ after_script:
   - npm run e2e
 env:
   global:
-    - DATABASE_URL=postgres://postgres@localhost/evernode2_test
-    - AWS_BUCKET=mlf-evernode2-test
+    - DATABASE_URL=postgres://postgres@localhost/evernode_test
+    - AWS_BUCKET=mlf-evernode-test
     # AWS_SECRET_ACCESS_KEY
     - secure: Gw11wrFlXgeqFrdii3QRiH03Er89XbP5f5s+XXkKj33XDcAaZ+PqLGfm6FDa/oQgIV2FWFk4w5J6Edh7NzY3TASNyqhBzD3lenjY77pDgkEpoeSEt15wnpDsj0M67yNLKgfI1HfhCBDZrfDmxtlzqNQJEVV1y50rs5rTfQnzluA=
     # AWS_ACCESS_KEY_ID
     - secure: R3fCYYUJmj+7gIGIQ67x0i3EP3tpWKxYASXTNuiU0cUrQ+G1JTvh3gQDtSkgNMzeoCuG1IF1yfCxTTyKt/bBY+29PtiAu8RIYZi3MUUkvXesaj0hmsJiChuthnWAwlVCWlpm8LtuO0Y4WAJOXOBTGvaTrAGQITXi0DTU99pEVgI=
     # SAUCE_USERNAME
-    - secure: PvGqHN+Xee7KlEsWZsvHkEQwgS5UBqU6AcSkZiXq30OHMoKm/y7rUsShpnWEd4qsToOvJW6tudK6S6kE5OtVoeKkrC4kI1/uw+CxvVrC4yoqbNN6MeEAy4wTZVnfFH5aJBIJrCNBsftyrpcJTNoq6YP3TTUwuzR6jDxXpI05/HY=
+    - secure: Tcw27UlmBzB/N/eUdrAKkrIwXhZ3UL92HrCTgSIHpAefIbGJppAizlIUa1vyRHRpdDCwR0kG8RqVGJqko1HLu2otC3rASZ0Jgg9epcTPoCODwAzAT1Bl9XoDpp6KyBmWhRtyKDDVs5Z2ExqtUvakl4wsWztPQwfT0fdGZXX9xH4=
     # SAUCE_ACCESS_KEY
-    - secure: PR+haVXzqAJfTbh84hs3MJnnImdptSVceokZhL3/nMN7pGiYiaO2Ww4JwRaF3lpL4dUbFEKUDv6uH5exFBnggHqIUtNr8Br2E+WLHdhHagEMvypIFTK+vmHQBM+a5Y5aPd9zyjK59tbw3lzwX1SHZKUcOd/sLsCnf3ityJeoZhw=
+    - secure: WICKBZAb6D/zb1X0/WMAIjab0BfhK2a1tvywfTe1UBkDerqkJKgjgB8E/smNqzOTJcg1kAUPekI6G3t2ZbzpwnXUvxfSsCz7mRN3HF08TU8WfjwHOzD8hY1T5Zn4bFVg89ssN8v4R5yBD4KttRw33Kn+GNjvDnnmv/c7r4dH0VY=

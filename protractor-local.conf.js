@@ -4,9 +4,9 @@ module.exports = {
   multiCapabilities: [
     {
       'browserName': 'chrome'
+    },
+    {
+      'browserName': 'firefox'
     }
-    // {
-    //   'browserName': 'firefox'
-    // }
   ]
 };

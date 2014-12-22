@@ -1,13 +1,13 @@
 {
-  "name": "evernode2",
+  "name": "evernode",
   "version": "2.0.0",
-  "description": "Evernode 2",
+  "description": "Evernode",
   "engines": {
     "node": "0.10.x"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mlfryman/evernode2"
+    "url": "https://github.com/mlfryman/evernode"
   },
   "bin": {
     "coveralls": "./node_modules/coveralls/bin/coveralls.js"
