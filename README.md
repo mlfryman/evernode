@@ -3,14 +3,13 @@ Evernode
 
 ### Code Badges
 ##### Travis CI
-[![Build Status](https://travis-ci.org/mlfryman/evernode.svg)](https://travis-ci.org/mlfryman/evernode)
+[![Build Status](https://travis-ci.org/mlfryman/evernode.svg?branch=master)](https://travis-ci.org/mlfryman/evernode)
 
 ##### Coveralls
-[![Coverage Status](https://coveralls.io/repos/mlfryman/evernode/badge.png)](https://coveralls.io/r/mlfryman/evernode)
+[![Coverage Status](https://coveralls.io/repos/mlfryman/evernode/badge.png?branch=master)](https://coveralls.io/r/mlfryman/evernode?branch=master)
 
 ##### Sauce Labs
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/mlf-evernode.svg)](https://saucelabs.com/u/mlf-evernode)
-
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/melanielfryman.svg)](https://saucelabs.com/u/melanielfryman)
 
 ### Screenshots
 ![Image1](https://raw.githubusercontent.com/mlfryman/evernode/master/docs/screenshots/evernode_home.png)
