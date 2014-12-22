@@ -2,13 +2,14 @@ Evernode
 ==========
 
 ### Code Badges
-##### Travis
+##### Travis CI
 [![Build Status](https://travis-ci.org/mlfryman/evernode2.svg)](https://travis-ci.org/mlfryman/evernode2)
 
 ##### Coveralls
 [![Coverage Status](https://coveralls.io/repos/mlfryman/evernode2/badge.png)](https://coveralls.io/r/mlfryman/evernode2)
 
 ##### Sauce Labs
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/mlf-evernode2.svg)](https://saucelabs.com/u/mlf-evernode2)
 
 
 ### Screenshots
