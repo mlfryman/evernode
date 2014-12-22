@@ -9,6 +9,6 @@ describe('logout', function(){
     expect(element(by.css('a[ui-sref="notes.list"]')).isDisplayed()).toBeTruthy();
     element(by.id('avatarlink')).click();
     expect(element(by.css('a[ui-sref="notes.list"]')).isDisplayed()).toBeFalsy();
-    expect(element(by.css('div[ui-view] > h1')).getText()).toEqual('home');
+    expect(element(by.css('.header-content > h1')).getText()).toEqual('Evernode');
   });
 });

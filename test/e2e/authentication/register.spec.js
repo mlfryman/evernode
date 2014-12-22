@@ -8,7 +8,7 @@ describe('register', function(){
   });
 
   it('should get register page', function(){
-    expect(element(by.css('div[ui-view] > h1')).getText()).toEqual('register');
+    expect(element(by.css('.section-header > h1')).getText()).toEqual('REGISTER');
   });
 
   it('should register a new user', function(){
@@ -16,6 +16,6 @@ describe('register', function(){
     element(by.model('user.password')).sendKeys('456');
     element(by.model('user.avatar')).sendKeys('http://images.apple.com/global/elements/flags/16x16/usa_2x.png');
     element(by.css('button[ng-click]')).click();
-    expect(element(by.css('div[ui-view] > h1')).getText()).toEqual('login');
+    expect(element(by.css('.section-header > h1')).getText()).toEqual('LOGIN');
   });
 });
