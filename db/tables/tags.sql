@@ -1,5 +1,5 @@
-create table tags(
-  id serial primary key,
-  name varchar(255) not null unique,
-  created_at timestamp not null default now()
+CREATE TABLE tags(
+  id serial PRIMARY KEY,
+  name varchar(255) NOT NULL UNIQUE,
+  created_at timestamp NOT NULL DEFAULT now()
 );

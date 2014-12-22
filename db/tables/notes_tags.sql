@@ -1,4 +1,4 @@
-create table notes_tags(
-  note_id integer not null references notes(id),
-  tag_id integer not null references tags(id)
+CREATE TABLE notes_tags(
+  note_id integer NOT NULL REFERENCES notes(id),
+  tag_id integer NOT NULL REFERENCES tags(id)
 );

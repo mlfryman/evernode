@@ -43,6 +43,6 @@
       }
     }
 
-    return {create:create, upload:upload, show:show, query:query, count:count, nuke:nuke};
+    return {create:create, query:query, show:show, count:count, nuke:nuke, upload:upload};
   }]);
 })();

@@ -1,18 +1,18 @@
-create or replace function query_notes (uid integer, lmt integer, ofst integer, tag varchar)
-returns table (note_id integer, title varchar, body text, updated_at timestamp, tags varchar[]) AS $$
-declare
-begin
+CREATE OR REPLACE FUNCTION query_notes (uid integer, lmt integer, ofst integer, tag varchar)
+RETURNS table (note_id integer, title varchar, body text, updated_at timestamp, tags varchar[]) AS $$
+DECLARE
+BEGIN
 
-  return query
-    select n.id, n.title, n.body, n.updated_at, array_agg(t.name)
-    from notes_tags nt
-    inner join notes n on n.id = nt.note_id
-    inner join tags t on t.id = nt.tag_id
-    where n.user_id = uid and t.name like tag
-    group by n.id
-    order by updated_at desc
-    offset ofst
-    limit lmt;
+  RETURN query
+    SELECT n.id, n.title, n.body, n.updated_at, array_agg(t.name)
+    FROM notes_tags nt
+    INNER JOIN notes n ON n.id = nt.note_id
+    INNER JOIN tags t ON t.id = nt.tag_id
+    WHERE n.user_id = uid AND t.name LIKE tag
+    GROUP BY n.id
+    ORDER BY updated_at DESC
+    OFFSET ofst
+    LIMIT lmt;
 
-end;
-$$ language plpgsql;
+END;
+$$ LANGUAGE plpgsql;

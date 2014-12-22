@@ -1,40 +1,39 @@
-create or replace function add_note (user_id integer, title varchar, body text, tags varchar)
-returns integer AS $$
-declare
+CREATE OR REPLACE FUNCTION add_note (user_id integer, title varchar, body text, tags varchar)
+RETURNS integer AS $$
+DECLARE
 
   nid integer;
   tid integer;
   names varchar[];
   tagname varchar;
 
-begin
-
+BEGIN
   -- insert the note
-  insert into notes (title, body, user_id) values (title, body, user_id) returning id into nid;
+  INSERT INTO notes (title, body, user_id) VALUES (title, body, user_id) RETURNING id INTO nid;
   -- turn string into array
-  select string_to_array(tags, ',') into names;
-  raise notice 'nid: %', nid;
-  raise notice 'names: %', names;
+  SELECT string_to_array(tags, ',') INTO names;
+  RAISE NOTICE 'nid: %', nid;
+  RAISE NOTICE 'names: %', names;
   -- create temp table
-  create temp table tagger on commit drop as select nid, t.id as tid, t.name as tname from tags t where t.name = any(names);
+  CREATE TEMP TABLE tagger on commit drop AS SELECT nid, t.id AS tid, t.name AS tname FROM tags t WHERE t.name = any(names);
 
   -- looping over all the tags
-  foreach tagname in array names
-  loop
-    tid := (select t.tid from tagger t where t.tname = tagname);
-    raise notice 'tid: %', tid;
+  FOREACH tagname in array names
+  LOOP
+    tid := (SELECT t.tid FROM tagger t WHERE t.tname = tagname);
+    RAISE NOTICE 'tid: %', tid;
 
     -- if the tag does not exist, then insert it
-    IF tid is null then
-      insert into tags (name) values (tagname) returning id into tid;
-      insert into tagger values (nid, tid, tagname);
-    end if;
-  end loop;
+    IF tid is NULL then
+      INSERT INTO tags (name) VALUES (tagname) RETURNING id INTO tid;
+      INSERT INTO tagger VALUES (nid, tid, tagname);
+    END if;
+  END LOOP;
 
   -- take the temp table and insert it into the join table
-  insert into notes_tags select t.nid, t.tid from tagger t;
+  INSERT INTO notes_tags SELECT t.nid, t.tid FROM tagger t;
   -- return the note id
-  return nid;
+  RETURN nid;
 
-end;
-$$ language plpgsql;
+END;
+$$ LANGUAGE plpgsql;

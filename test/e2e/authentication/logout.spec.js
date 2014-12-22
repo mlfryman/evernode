@@ -1,17 +1,7 @@
 'use strict';
 
-var cp  = require('child_process'),
-    h   = require('../../helpers/helpers'),
-    db  = h.getDB();
-
 describe('logout', function(){
-  beforeEach(function(done){
-    cp.execFile(__dirname + '/../../scripts/clean-db.sh', [db], {cwd:__dirname + '/../../scripts'}, function(err, stdout, stderr){
-      done();
-    });
-  });
-
-  it('should logout a user', function(){
+  it('should logout a User', function(){
     browser.get('/#/login');
     element(by.model('user.username')).sendKeys('bob');
     element(by.model('user.password')).sendKeys('123');

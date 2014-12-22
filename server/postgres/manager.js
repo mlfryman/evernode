@@ -15,5 +15,4 @@ exports.query = function(sql, params, cb){
       cb(err, results);
     });
   });
-
 };

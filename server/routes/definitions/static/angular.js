@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  description: 'Angular Routes',
+  description: 'Static Angular Routes',
   tags:['static'],
   auth: false,
   handler: {

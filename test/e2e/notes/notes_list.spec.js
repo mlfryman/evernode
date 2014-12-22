@@ -1,23 +1,17 @@
 'use strict';
 
-var cp   = require('child_process'),
-    h    = require('../../helpers/helpers'),
-    db   = h.getDB(),
-    path = require('path');
+var path = require('path');
 
-describe('login', function(){
+describe('notes list', function(){
   beforeEach(function(done){
-    cp.execFile(__dirname + '/../../scripts/clean-db.sh', [db], {cwd:__dirname + '/../../scripts'}, function(err, stdout, stderr){
       login();
-      done();
-    });
   });
 
   it('should get the notes page', function(){
     expect(element(by.css('div[ui-view] > h1')).getText()).toEqual('notes');
   });
 
-  it('should create a new note', function(){
+  it('should create a new Note', function(){
     createNote('a', 'b', 'c,d,e');
     expect(element(by.model('note.title')).getAttribute('value')).toEqual('');
     expect(element(by.model('note.body')).getAttribute('value')).toEqual('');
@@ -26,7 +20,7 @@ describe('login', function(){
   });
 
   it('should go to the note detail page', function(){
-    createNote('x', 'y', 'z1,z2,z3');
+    createNote('a', 'b', 'c,d,e');
     element(by.repeater('note in notes').row(0)).element(by.css('td:nth-child(2) > a')).click();
     expect(element(by.css('div[ui-view] > h1')).getText()).toEqual('x');
   });

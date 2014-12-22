@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "0.10"
+  - "0.10.33"
 services:
   - postgresql
 addons:
@@ -14,7 +14,7 @@ script:
 before_script:
   - psql -c 'create database evernode2_test;' -U postgres
   - cd test/scripts; ./create-db.sh evernode2_test; cd ../..;
-  - PORT=8080 node server/index.js&
+  - PORT=9001 node server/index.js&
   - sleep 5
 after_script:
   - npm run coveralls

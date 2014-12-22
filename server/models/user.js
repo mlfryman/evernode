@@ -18,7 +18,10 @@ User.register = function(obj, cb){
   randomUrl(obj.avatar, function(file, avatar, token){
     user.avatar = avatar;
     user.token = token;
-    pg.query('insert into users (username, password, avatar, token) values ($1, $2, $3, $4) returning id', [user.username, user.password, user.avatar, user.token], function(err, results){
+
+    var psqlString = 'INSERT INTO users (username, password, avatar, token) VALUES ($1, $2, $3, $4) RETURNING id',
+        psqlParams = [user.username, user.password, user.avatar, user.token];
+    pg.query(psqlString, psqlParams, function(err, results){
       if(err){return cb(true);}
       download(obj.avatar, file, cb);
     });
@@ -26,7 +29,9 @@ User.register = function(obj, cb){
 };
 
 User.login = function(obj, cb){
-  pg.query('select * from users where username = $1 limit 1', [obj.username], function(err, results){
+  var psqlString = 'SELECT * FROM users WHERE username = $1 limit 1',
+      psqlParams = [obj.username];
+  pg.query(psqlString, psqlParams, function(err, results){
     if(err || !results.rowCount){return cb();}
     var isAuth = bcrypt.compareSync(obj.password, results.rows[0].password);
     if(!isAuth){return cb();}

@@ -19,7 +19,7 @@ describe('Notes', function(){
   beforeEach(function(done){
     cp.execFile(__dirname + '/../scripts/clean-db.sh', [db], {cwd:__dirname + '/../scripts'}, function(err, stdout, stderr){
       var options1 = {
-        method: 'post',
+        method: 'POST',
         url: '/login',
         payload: {
           username: 'bob',
@@ -30,7 +30,7 @@ describe('Notes', function(){
       server.inject(options1, function(response){
         cookie = response.headers['set-cookie'][0].match(/hapi-cookie=[^;]+/)[0];
         var options2 = {
-          method: 'post',
+          method: 'POST',
           url: '/notes',
           payload: {
             title: 'a',
@@ -53,7 +53,7 @@ describe('Notes', function(){
   describe('post /notes', function(){
     it('should create a note', function(done){
       var options = {
-        method: 'post',
+        method: 'POST',
         url: '/notes',
         payload: {
           title: 'a',
@@ -75,7 +75,7 @@ describe('Notes', function(){
   describe('get /notes', function(){
     it('should get notes', function(done){
       var options = {
-        method: 'get',
+        method: 'GET',
         url: '/notes',
         headers:{
           cookie:cookie
@@ -94,7 +94,7 @@ describe('Notes', function(){
   describe('get /notes/count', function(){
     it('should get notes count', function(done){
       var options = {
-        method: 'get',
+        method: 'GET',
         url: '/notes/count',
         headers:{
           cookie:cookie
@@ -113,7 +113,7 @@ describe('Notes', function(){
   describe('get /notes/3', function(){
     it('should show a note', function(done){
       var options = {
-        method: 'get',
+        method: 'GET',
         url: '/notes/' + noteId,
         headers:{
           cookie:cookie
@@ -130,7 +130,7 @@ describe('Notes', function(){
   describe('delete /notes/3', function(){
     it('should delete a note', function(done){
       var options = {
-        method: 'delete',
+        method: 'DELETE',
         url: '/notes/' + noteId,
         headers:{
           cookie:cookie
@@ -147,7 +147,7 @@ describe('Notes', function(){
   describe('post /notes/3/upload-mobile', function(){
     it('should upload a mobile photo', function(done){
       var options = {
-        method: 'post',
+        method: 'POST',
         url: '/notes/' + noteId + '/upload-mobile',
         headers:{
           cookie:cookie

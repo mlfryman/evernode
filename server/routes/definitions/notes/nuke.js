@@ -4,7 +4,7 @@ var Joi  = require('joi'),
     Note = require('../../../models/note');
 
 module.exports = {
-  description: 'Delete Note',
+  description: 'Delete a Note',
   tags:['notes'],
   validate: {
     params: {

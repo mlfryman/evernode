@@ -7,8 +7,8 @@
     height = height - pos.top;
     height = height - footer.height();
     if (height > 0) {
-        footer.css({
-            'margin-top': height + 'px'
-        });
+      footer.css({
+        'margin-top': height + 'px'
+      });
     }
 });

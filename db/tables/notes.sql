@@ -1,8 +1,8 @@
-create table notes(
-  id serial primary key,
-  title varchar(255) not null,
-  body text not null,
-  created_at timestamp not null default now(),
-  updated_at timestamp not null default now(),
-  user_id integer not null references users(id)
+CREATE TABLE notes(
+  id serial PRIMARY KEY,
+  title varchar(255) NOT NULL,
+  body text NOT NULL,
+  created_at timestamp NOT NULL DEFAULT now(),
+  updated_at timestamp NOT NULL DEFAULT now(),
+  user_id integer NOT NULL REFERENCES users(id)
 );

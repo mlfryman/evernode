@@ -1,14 +1,14 @@
-create or replace function nuke_note (uid integer, nid integer)
-returns integer AS $$
-declare
-begin
+CREATE OR REPLACE FUNCTION nuke_note (uid integer, nid integer)
+RETURNS integer AS $$
+DECLARE
+BEGIN
 
-  nid := (select n.id from notes n where n.id = nid and n.user_id = uid);
-  delete from notes_tags nt where nt.note_id = nid;
-  delete from photos p where p.note_id = nid;
-  delete from notes n where n.id = nid;
+  nid := (SELECT n.id from notes n WHERE n.id = nid AND n.user_id = uid);
+  DELETE FROM notes_tags nt WHERE nt.note_id = nid;
+  DELETE FROM photos p WHERE p.note_id = nid;
+  DELETE FROM notes n WHERE n.id = nid;
 
-  return nid;
+  RETURN nid;
 
-end;
-$$ language plpgsql;
+END;
+$$ LANGUAGE plpgsql;

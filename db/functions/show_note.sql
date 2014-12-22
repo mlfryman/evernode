@@ -1,17 +1,17 @@
-create or replace function show_note (uid integer, nid integer)
-returns table (note_id integer, title varchar, body text, updated_at timestamp, tags varchar[], urls varchar[]) AS $$
-declare
-begin
+CREATE OR REPLACE FUNCTION show_note (uid integer, nid integer)
+RETURNS table (note_id integer, title varchar, body text, updated_at timestamp, tags varchar[], urls varchar[]) AS $$
+DECLARE
+BEGIN
 
-  return query
-    select n.id, n.title, n.body, n.updated_at, array_agg(distinct t.name), array_agg(distinct p.url)
-    from notes n
-    left outer join photos p on n.id = p.note_id
-    inner join notes_tags nt on n.id = nt.note_id
-    inner join tags t on t.id = nt.tag_id
-    inner join users u on u.id = n.user_id
-    where n.id = nid and u.id = uid
-    group by n.id;
+  RETURN query
+    SELECT n.id, n.title, n.body, n.updated_at, array_agg(distinct t.name), array_agg(distinct p.url)
+    FROM notes n
+    LEFT OUTER JOIN photos p ON n.id = p.note_id
+    INNER JOIN notes_tags nt ON n.id = nt.note_id
+    INNER JOIN tags t ON t.id = nt.tag_id
+    INNER JOIN users u ON u.id = n.user_id
+    WHERE n.id = nid AND u.id = uid
+    GROUP BY n.id;
 
-end;
-$$ language plpgsql;
+END;
+$$ LANGUAGE plpgsql;
