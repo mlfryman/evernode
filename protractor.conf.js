@@ -5,7 +5,6 @@ if(process.env.TRAVIS_JOB_NUMBER){
 }else{
   config = require('./protractor-local.conf');
 }
-// define the homepage suite
 // run every .spec.js file in the ______ test dir
 config.suites = {
   homepage: 'test/e2e/homepage/**/*.spec.js',
@@ -16,7 +15,7 @@ config.suites = {
 config.jasmineNodeOpts = {
   isVerbose: true,
   showColors: true,
-  defaultTimeoutInterval: 30000
+  defaultTimeoutInterval: 300000
 };
 
 config.baseUrl = 'http://localhost:9001';

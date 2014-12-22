@@ -4,7 +4,8 @@ var path = require('path');
 
 describe('notes list', function(){
   beforeEach(function(done){
-      login();
+    login();
+    done();
   });
 
   it('should get the notes page', function(){
@@ -22,7 +23,7 @@ describe('notes list', function(){
   it('should go to the note detail page', function(){
     createNote('a', 'b', 'c,d,e');
     element(by.repeater('note in notes').row(0)).element(by.css('td:nth-child(2) > a')).click();
-    expect(element(by.css('div[ui-view] > h1')).getText()).toEqual('x');
+    expect(element(by.css('div[ui-view] > h1')).getText()).toEqual('a');
   });
 });
 
